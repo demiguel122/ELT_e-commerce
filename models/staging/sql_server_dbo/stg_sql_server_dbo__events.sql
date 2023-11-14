@@ -19,7 +19,6 @@ renamed_casted AS (
          session_id,
          created_at,
          order_id,
-         _fivetran_deleted AS date_deleted,
          _fivetran_synced AS date_load
     FROM src_events
     )

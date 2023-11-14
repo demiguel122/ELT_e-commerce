@@ -24,7 +24,6 @@ renamed_casted AS (
          delivered_at,
          tracking_id,
          status,
-         _fivetran_deleted AS date_deleted,
          _fivetran_synced AS date_load
     FROM src_orders
     )

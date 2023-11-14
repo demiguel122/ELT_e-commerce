@@ -14,7 +14,6 @@ renamed_casted AS (
          order_id,
          product_id,
          quantity,
-         _fivetran_deleted AS date_deleted,
          _fivetran_synced AS date_load
     FROM src_order_items
     )

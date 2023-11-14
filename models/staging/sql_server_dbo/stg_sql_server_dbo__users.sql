@@ -20,7 +20,6 @@ renamed_casted AS (
          total_orders,
          first_name,
          email,
-         _fivetran_deleted AS date_deleted,
          _fivetran_synced AS date_load
     FROM src_users
     )

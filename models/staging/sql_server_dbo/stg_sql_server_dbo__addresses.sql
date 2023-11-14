@@ -16,7 +16,6 @@ renamed_casted AS (
          country,
          address,
          state,
-         _fivetran_deleted AS date_deleted,
          _fivetran_synced AS date_load
     FROM src_addresses
     )

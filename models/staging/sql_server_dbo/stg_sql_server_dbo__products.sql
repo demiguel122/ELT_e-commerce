@@ -15,7 +15,6 @@ renamed_casted AS (
          price,
          name,
          inventory,
-         _fivetran_deleted AS date_deleted,
          _fivetran_synced AS date_load
     FROM src_products
     )
