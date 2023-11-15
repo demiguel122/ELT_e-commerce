@@ -12,19 +12,19 @@ WITH src_orders AS (
 renamed_casted AS (
     SELECT
          order_id,
+         user_id,
+         created_at,
+         order_cost,
+         status,
          shipping_service,
          shipping_cost,
-         address_id,
-         created_at,
-         promo_id,
-         estimated_delivery_at,
-         order_cost,
-         user_id,
          order_total,
+         address_id,
+         estimated_delivery_at,
          delivered_at,
          tracking_id,
-         status,
-         _fivetran_synced AS date_load
+         promo_id,
+         _fivetran_synced AS date_loaded
     FROM src_orders
     )
 

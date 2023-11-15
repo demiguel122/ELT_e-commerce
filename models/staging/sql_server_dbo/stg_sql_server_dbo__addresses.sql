@@ -12,11 +12,11 @@ WITH src_addresses AS (
 renamed_casted AS (
     SELECT
          address_id,
-         zipcode,
-         country,
          address,
+         zipcode,
          state,
-         _fivetran_synced AS date_load
+         country,
+         _fivetran_synced AS date_loaded
     FROM src_addresses
     )
 

@@ -12,15 +12,15 @@ WITH src_users AS (
 renamed_casted AS (
     SELECT
          user_id,
-         updated_at,
-         address_id,
+         first_name,
          last_name,
-         created_at,
+         email,
          phone_number,
          total_orders,
-         first_name,
-         email,
-         _fivetran_synced AS date_load
+         address_id,
+         created_at,
+         updated_at,
+         _fivetran_synced AS date_loaded
     FROM src_users
     )
 
