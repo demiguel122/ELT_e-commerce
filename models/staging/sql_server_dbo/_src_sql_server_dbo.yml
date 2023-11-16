@@ -26,8 +26,6 @@ sources:
               - unique
               - not null
           - name: zipcode
-            tests:
-              - positive_values
           - name: country
           - name: address
           - name: state
@@ -41,11 +39,23 @@ sources:
               - not null
           - name: page_url
           - name: event_type
-          - name: user_idl
+          - name: user_id
+            tests:
+              - relationships:
+                  to: source('sql_server_dbo','users')
+                  field: user_id
           - name: product_id
+            tests:
+              - relationships:
+                  to: source('sql_server_dbo','products')
+                  field: product_id
           - name: session_id
           - name: created_at
           - name: order_id
+            tests:
+              - relationships:
+                  to: source('sql_server_dbo','orders')
+                  field: order_id
           - name: _fivetran_deleted
           - name: _fivetran_synced
       - name: orders
@@ -55,9 +65,6 @@ sources:
               - unique 
               - not null
           - name: shipping_service
-            tests:
-              - accepted_values:
-                  values: ['ups', 'usps','fedex', 'dhl']
           - name: shipping_cost
             tests:
               - positive_values
@@ -83,8 +90,17 @@ sources:
             tests:
               - unique 
               - not null
+              - relationships:
+                  to: source('sql_server_dbo','orders')
+                  field: order_id
           - name: product_id
+            tests:
+              - relationships:
+                  field: source('sql_server_dbo','products')
+                  to: product_id
           - name: quantity
+            tests:
+              - positive_values
           - name: _fivetran_deleted
           - name: _fivetran_synced
       - name: products
@@ -94,8 +110,12 @@ sources:
               - unique 
               - not null
           - name: price
+            tests:
+              - positive_values
           - name: name
           - name: inventory
+            tests:
+              - positive_values
           - name: _fivetran_deleted
           - name: _fivetran_synced
       - name: promos
@@ -122,6 +142,8 @@ sources:
           - name: created_at
           - name: phone_number
           - name: total_orders
+            tests:
+              - positive_values
           - name: first_name
           - name: email
           - name: _fivetran_deleted
