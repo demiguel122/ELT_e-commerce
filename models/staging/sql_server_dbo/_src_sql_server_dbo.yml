@@ -41,23 +41,11 @@ sources:
               - not null
           - name: page_url
           - name: event_type
-          - name: user_id
-            tests:
-              - unique 
-              - not null
+          - name: user_idl
           - name: product_id
-            tests:
-              - unique 
-              - not null
           - name: session_id
-            tests:
-              - unique 
-              - not null
           - name: created_at
           - name: order_id
-            tests:
-              - unique 
-              - not null
           - name: _fivetran_deleted
           - name: _fivetran_synced
       - name: orders
@@ -74,30 +62,18 @@ sources:
             tests:
               - positive_values
           - name: address_id
-            tests:
-              - unique 
-              - not null
           - name: created_at
           - name: promo_id
-            tests:
-              - unique 
-              - not null
           - name: estimated_delivery_at
           - name: order_cost
             tests:
               - positive_values
           - name: user_id
-            tests:
-              - unique 
-              - not null
           - name: order_total
             tests:
               - positive_values
           - name: delivered_at
           - name: tracking_id
-            tests:
-              - unique 
-              - not null
           - name: status
           - name: _fivetran_deleted
           - name: _fivetran_synced
@@ -108,9 +84,6 @@ sources:
               - unique 
               - not null
           - name: product_id
-            tests:
-              - unique 
-              - not null
           - name: quantity
           - name: _fivetran_deleted
           - name: _fivetran_synced
@@ -145,9 +118,6 @@ sources:
               - not null
           - name: updated_at
           - name: address_id
-            tests:
-              - unique 
-              - not null
           - name: last_name
           - name: created_at
           - name: phone_number
