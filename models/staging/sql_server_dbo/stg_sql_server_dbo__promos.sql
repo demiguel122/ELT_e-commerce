@@ -4,18 +4,22 @@
   )
 }}
 
-WITH src_promos AS (
+WITH base_promos AS (
     SELECT * 
     FROM {{ ref('base_sql_server_dbo__promos') }}
-    ),
-
-renamed_casted AS (
-    SELECT
-         promo_id,
-         discount,
-         status,
-         _fivetran_synced AS date_loaded
-    FROM src_promos
     )
 
-SELECT * FROM renamed_casted
+SELECT
+    decode
+        (promo_id,
+        'task-force', 'task_force',
+        'instruction set', 'instruction set',
+        'leverage', 'leverage',
+        'Optional', 'optional',
+        'Mandatory', 'mandatory',
+        'Digitized', 'digitized',
+        '', 'no promo') as promo_id,
+    discount,
+    status,
+    date_loaded
+FROM base_promos
