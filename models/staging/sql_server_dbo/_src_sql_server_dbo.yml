@@ -26,9 +26,17 @@ sources:
               - unique
               - not_null
           - name: zipcode
+            tests:
+              - not_null
           - name: country
+            tests:
+              - not_null
           - name: address
+            tests:
+              - not_null
           - name: state
+            tests:
+              - not_null
           - name: _fivetran_deleted
           - name: _fivetran_synced
       - name: events
@@ -38,7 +46,11 @@ sources:
               - unique 
               - not_null
           - name: page_url
+            tests:
+              - not_null
           - name: event_type
+            tests:
+              - not_null
           - name: user_id
             tests:
               - not_null
@@ -51,7 +63,11 @@ sources:
                   to: source('sql_server_dbo','products')
                   field: product_id
           - name: session_id
+            tests:
+              - not_null
           - name: created_at
+            tests:
+              - not_null
           - name: order_id
             tests:
               - relationships:
@@ -77,6 +93,8 @@ sources:
             tests: 
               - not_null
           - name: promo_id
+            tests: 
+              - not_null
           - name: estimated_delivery_at
           - name: order_cost
             tests:
@@ -112,6 +130,7 @@ sources:
                   to: product_id
           - name: quantity
             tests:
+              - not_null
               - positive_values
           - name: _fivetran_deleted
           - name: _fivetran_synced
@@ -123,10 +142,14 @@ sources:
               - not_null
           - name: price
             tests:
+              - not_null
               - positive_values
           - name: name
+            tests:
+              - not_null
           - name: inventory
             tests:
+              - not_null
               - positive_values
           - name: _fivetran_deleted
           - name: _fivetran_synced
@@ -138,8 +161,11 @@ sources:
               - not_null
           - name: discount
             tests:
+              - not_null
               - positive_values
           - name: status
+            tests:
+              - not_null
           - name: _fivetran_deleted
           - name: _fivetran_synced
       - name: users
@@ -149,14 +175,29 @@ sources:
               - unique 
               - not_null
           - name: updated_at
+            tests:
+              - not_null
           - name: address_id
+            tests:
+              - not_null
           - name: last_name
+            tests:
+              - not_null
           - name: created_at
+            tests:
+              - not_null
           - name: phone_number
+            tests:
+              - not_null
           - name: total_orders
             tests:
+              - not_null
               - positive_values
           - name: first_name
+            tests:
+              - not_null
           - name: email
+            tests:
+              - not_null
           - name: _fivetran_deleted
           - name: _fivetran_synced
