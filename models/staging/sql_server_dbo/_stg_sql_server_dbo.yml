@@ -1,0 +1,278 @@
+version: 2
+
+models:
+  - name: stg_sql_server_dbo__addresses
+    description: ""
+    columns:
+      - name: address_id
+        data_type: varchar
+        description: ""
+        tests:
+              - unique
+              - not_null
+
+      - name: address
+        data_type: varchar
+        description: ""
+
+      - name: zipcode
+        data_type: number
+        description: ""
+
+      - name: state
+        data_type: varchar
+        description: ""
+
+      - name: country
+        data_type: varchar
+        description: ""
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""
+  - name: stg_sql_server_dbo__events
+    description: ""
+    columns:
+      - name: event_id
+        data_type: varchar
+        description: ""
+        tests:
+              - unique
+              - not_null
+
+      - name: event_type
+        data_type: varchar
+        description: ""
+
+      - name: user_id
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+              - relationships:
+                  to: ref('stg_sql_server_dbo__users')
+                  field: user_id
+
+      - name: session_id
+        data_type: varchar
+        description: ""
+
+      - name: page_url
+        data_type: varchar
+        description: ""
+
+      - name: order_id
+        data_type: varchar
+        description: ""
+        tests:
+              - relationships:
+                  to: ref('stg_sql_server_dbo__orders')
+                  field: order_id
+
+      - name: product_id
+        data_type: varchar
+        description: ""
+        tests:
+              - relationships:
+                  to: ref('stg_sql_server_dbo__products')
+                  field: product_id
+
+      - name: created_at
+        data_type: timestamp_ntz
+        description: ""
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""
+  - name: stg_sql_server_dbo__order_items
+    description: ""
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: ""
+        tests: 
+              - not_null
+              - relationships:
+                  to: ref('stg_sql_server_dbo__orders')
+                  field: order_id
+
+      - name: product_id
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+              - relationships:
+                  field: ref('stg_sql_server_dbo__products')
+                  to: product_id
+
+      - name: quantity
+        data_type: number
+        description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""
+  - name: stg_sql_server_dbo__orders
+    description: ""
+    columns:
+      - name: order_id
+        data_type: varchar
+        description: ""
+
+      - name: user_id
+        data_type: varchar
+        description: ""
+
+      - name: created_at
+        data_type: timestamp_tz
+        description: ""
+
+      - name: order_cost
+        data_type: float
+        description: ""
+
+      - name: status
+        data_type: varchar
+        description: ""
+
+      - name: shipping_service
+        data_type: varchar
+        description: ""
+
+      - name: shipping_cost
+        data_type: float
+        description: ""
+
+      - name: order_total
+        data_type: float
+        description: ""
+
+      - name: address_id
+        data_type: varchar
+        description: ""
+
+      - name: estimated_delivery_at
+        data_type: timestamp_tz
+        description: ""
+
+      - name: delivered_at
+        data_type: timestamp_tz
+        description: ""
+
+      - name: tracking_id
+        data_type: varchar
+        description: ""
+
+      - name: promo_id
+        data_type: varchar
+        description: ""
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""
+  - name: stg_sql_server_dbo__products
+    description: ""
+    columns:
+      - name: product_id
+        data_type: varchar
+        description: ""
+        tests:
+              - unique 
+              - not_null
+
+      - name: name
+        data_type: varchar
+        description: ""
+
+      - name: price
+        data_type: float
+        description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: inventory
+        data_type: number
+        description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""
+  - name: stg_sql_server_dbo__promos
+    description: ""
+    columns:
+      - name: promo_id
+        data_type: varchar
+        description: ""
+        tests:
+              - unique 
+              - not_null
+
+      - name: discount
+        data_type: number
+        description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: status
+        data_type: varchar
+        description: ""
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""
+  - name: stg_sql_server_dbo__users
+    description: ""
+    columns:
+      - name: user_id
+        data_type: varchar
+        description: ""
+        tests:
+              - unique 
+              - not_null
+
+      - name: first_name
+        data_type: varchar
+        description: ""
+
+      - name: last_name
+        data_type: varchar
+        description: ""
+
+      - name: email
+        data_type: varchar
+        description: ""
+
+      - name: phone_number
+        data_type: varchar
+        description: ""
+
+      - name: total_orders
+        data_type: number
+        description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: address_id
+        data_type: varchar
+        description: ""
+
+      - name: created_at
+        data_type: timestamp_tz
+        description: ""
+
+      - name: updated_at
+        data_type: timestamp_tz
+        description: ""
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""
