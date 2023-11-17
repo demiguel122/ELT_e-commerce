@@ -109,6 +109,8 @@ sources:
               - positive_values
           - name: delivered_at
           - name: tracking_id
+            tests:
+              - unique
           - name: status
             tests:
               - not_null
