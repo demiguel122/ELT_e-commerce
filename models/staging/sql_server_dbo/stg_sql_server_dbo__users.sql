@@ -18,8 +18,10 @@ renamed_casted AS (
          phone_number,
          total_orders,
          address_id,
-         created_at,
-         updated_at,
+         to_date(created_at) AS created_date,
+         to_time(created_at) AS created_time,
+         to_date(updated_at) AS updated_date,
+         to_time(updated_at) AS updated_time,
          _fivetran_synced AS date_loaded
     FROM src_users
     )
