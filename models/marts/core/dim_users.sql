@@ -16,7 +16,6 @@ SELECT
     last_name,
     email,
     phone_number,
-    total_orders,
     address_id,
     created_date,
     created_time,
