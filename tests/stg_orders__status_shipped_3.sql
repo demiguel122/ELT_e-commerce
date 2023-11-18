@@ -1,3 +1,3 @@
 SELECT *
 FROM {{ ref('stg_sql_server_dbo__orders') }} 
-WHERE status = 'shipped' AND delivered_at IS NOT NULL
+WHERE status = 'shipped' AND delivered_date IS NOT NULL

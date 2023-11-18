@@ -18,8 +18,8 @@ SELECT
     phone_number,
     total_orders,
     address_id,
-    to_date(created_at) AS created_date,
-    to_time(created_at) AS created_time,
-    to_date(updated_at) AS updated_date,
-    to_time(updated_at) AS updated_time,
+    created_date,
+    created_time,
+    updated_date,
+    updated_time
 FROM stg_users

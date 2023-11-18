@@ -3,10 +3,6 @@ version: 2
 models:
   - name: stg_google_sheets__budget
     columns:
-      - name: _row
-        tests:
-          - not_null
-          - unique
       - name: product_id         
         tests:
           - not_null
@@ -17,7 +13,7 @@ models:
         tests:
           - not_null
           - positive_values    
-      - name: month
+      - name: date
         tests:
           - not_null
       - name: date_loaded

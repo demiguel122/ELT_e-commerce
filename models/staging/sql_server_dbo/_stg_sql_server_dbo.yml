@@ -14,18 +14,26 @@ models:
       - name: address
         data_type: varchar
         description: ""
+        tests:
+          - not_null
 
       - name: zipcode
         data_type: number
         description: ""
+        tests:
+          - not_null
 
       - name: state
         data_type: varchar
         description: ""
+        tests:
+          - not_null
 
       - name: country
         data_type: varchar
         description: ""
+        tests:
+          - not_null
 
       - name: date_loaded
         data_type: timestamp_tz
@@ -73,6 +81,7 @@ models:
         data_type: varchar
         description: ""
         tests:
+              - not_null 
               - relationships:
                   to: ref('stg_sql_server_dbo__products')
                   field: product_id
@@ -102,8 +111,8 @@ models:
         tests:
               - not_null
               - relationships:
-                  field: ref('stg_sql_server_dbo__products')
-                  to: product_id
+                  to: ref('stg_sql_server_dbo__products')
+                  field: product_id
 
       - name: quantity
         data_type: number
@@ -165,6 +174,8 @@ models:
       - name: tracking_id
         data_type: varchar
         description: ""
+        tests:
+          - not_null
 
       - name: promo_id
         data_type: varchar
@@ -253,13 +264,6 @@ models:
       - name: phone_number
         data_type: varchar
         description: ""
-
-      - name: total_orders
-        data_type: number
-        description: ""
-        tests:
-              - not_null
-              - positive_values
 
       - name: address_id
         data_type: varchar

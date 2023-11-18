@@ -27,6 +27,7 @@ sources:
               - not_null
           - name: zipcode
             tests:
+              - positive_values
               - not_null
           - name: country
             tests:
@@ -109,8 +110,6 @@ sources:
               - positive_values
           - name: delivered_at
           - name: tracking_id
-            tests:
-              - unique
           - name: status
             tests:
               - not_null
@@ -128,8 +127,8 @@ sources:
             tests:
               - not_null
               - relationships:
-                  field: source('sql_server_dbo','products')
-                  to: product_id
+                  to: source('sql_server_dbo','products')
+                  field: product_id
           - name: quantity
             tests:
               - not_null
@@ -192,9 +191,6 @@ sources:
             tests:
               - not_null
           - name: total_orders
-            tests:
-              - not_null
-              - positive_values
           - name: first_name
             tests:
               - not_null

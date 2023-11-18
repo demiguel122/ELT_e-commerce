@@ -16,7 +16,6 @@ renamed_casted AS (
          last_name,
          email,
          phone_number,
-         total_orders,
          address_id,
          to_date(created_at) AS created_date,
          to_time(created_at) AS created_time,
