@@ -4,22 +4,25 @@
   )
 }}
 
-WITH base_promos AS (
+WITH src_promos AS (
     SELECT * 
-    FROM {{ ref('base_sql_server_dbo__promos') }}
+    FROM {{ source('sql_server_dbo', 'promos') }}
+    ),
+
+stg_promos AS (
+    SELECT
+        decode
+            (promo_id,
+            'task-force', 'task-force',
+            'instruction set', 'instruction set',
+            'leverage', 'leverage',
+            'Optional', 'optional',
+            'Mandatory', 'mandatory',
+            'Digitized', 'digitized') AS promo_id,
+         discount,
+         status,
+         _fivetran_synced AS date_loaded
+    FROM src_promos
     )
 
-SELECT
-    decode
-        (promo_id,
-        'task-force', 'task_force',
-        'instruction set', 'instruction set',
-        'leverage', 'leverage',
-        'Optional', 'optional',
-        'Mandatory', 'mandatory',
-        'Digitized', 'digitized',
-        '', 'no promo') as promo_id,
-    discount,
-    status,
-    date_loaded
-FROM base_promos
+SELECT * FROM stg_promos

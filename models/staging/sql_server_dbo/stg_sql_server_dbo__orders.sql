@@ -17,7 +17,14 @@ renamed_casted AS (
          to_time(created_at) AS created_time,
          order_cost,
          status,
-         shipping_service,
+         decode (
+            shipping_service,
+            'ups', 'ups',
+            'usps', 'usps',
+            'fedex', 'fedex',
+            'dhl', 'dhl',
+            '', 'pending'
+         ) AS shipping_service,
          shipping_cost,
          order_total,
          address_id,
@@ -26,7 +33,15 @@ renamed_casted AS (
          to_date(delivered_at) AS delivered_date,
          to_time(delivered_at) AS delivered_time,
          tracking_id,
-         promo_id,
+         decode
+            (promo_id,
+            'task-force', 'task-force',
+            'instruction set', 'instruction set',
+            'leverage', 'leverage',
+            'Optional', 'optional',
+            'Mandatory', 'mandatory',
+            'Digitized', 'digitized',
+            '', 'without promo') AS promo_id,
          _fivetran_synced AS date_loaded
     FROM src_orders
     )
