@@ -9,7 +9,7 @@ WITH src_orders AS (
     FROM {{ source('sql_server_dbo', 'orders') }}
     ),
 
-renamed_casted AS (
+stg_orders AS (
     SELECT
          order_id,
          user_id,
@@ -32,7 +32,10 @@ renamed_casted AS (
          to_time(estimated_delivery_at) AS estimated_delivery_time,
          to_date(delivered_at) AS delivered_date,
          to_time(delivered_at) AS delivered_time,
-         tracking_id,
+         CASE 
+            WHEN tracking_id = '' THEN 'pending'
+            ELSE tracking_id
+            END AS tracking_id,
          decode
             (promo_id,
             'task-force', 'task-force',
@@ -46,4 +49,4 @@ renamed_casted AS (
     FROM src_orders
     )
 
-SELECT * FROM renamed_casted
+SELECT * FROM stg_orders
