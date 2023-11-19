@@ -1,3 +1,5 @@
 SELECT *
 FROM {{ ref('stg_sql_server_dbo__orders') }} 
-WHERE status = 'delivered' AND estimated_delivery_date IS NULL
+WHERE 
+    status = 'delivered' AND delivered_date IS NULL 
+    OR status = 'delivered' AND delivered_time IS NULL

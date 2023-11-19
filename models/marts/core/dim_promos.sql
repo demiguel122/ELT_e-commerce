@@ -18,10 +18,7 @@ new_promo AS
     SELECT *
     FROM stg_promos
     UNION ALL
-    SELECT
-        'without promo',
-        0,
-        'not applicable'
+    SELECT 'no promo', 0, 'not applicable'
 )
 
 SELECT

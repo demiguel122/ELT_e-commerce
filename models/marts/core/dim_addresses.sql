@@ -48,5 +48,5 @@ SELECT
     country,
     date_loaded
 FROM only_unique_ids
-LEFT JOIN {{ ref('stg_sql_server_dbo__addresses') }}
+FULL JOIN {{ ref('stg_sql_server_dbo__addresses') }}
 USING(address_id)

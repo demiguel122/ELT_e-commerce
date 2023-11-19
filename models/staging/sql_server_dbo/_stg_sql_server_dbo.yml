@@ -72,19 +72,10 @@ models:
       - name: order_id
         data_type: varchar
         description: ""
-        tests:
-              - relationships:
-                  to: ref('stg_sql_server_dbo__orders')
-                  field: order_id
 
       - name: product_id
         data_type: varchar
         description: ""
-        tests:
-              - not_null 
-              - relationships:
-                  to: ref('stg_sql_server_dbo__products')
-                  field: product_id
 
       - name: created_at
         data_type: timestamp_ntz

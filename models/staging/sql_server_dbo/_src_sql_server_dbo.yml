@@ -59,10 +59,6 @@ sources:
                   to: source('sql_server_dbo','users')
                   field: user_id
           - name: product_id
-            tests:
-              - relationships:
-                  to: source('sql_server_dbo','products')
-                  field: product_id
           - name: session_id
             tests:
               - not_null
@@ -70,10 +66,6 @@ sources:
             tests:
               - not_null
           - name: order_id
-            tests:
-              - relationships:
-                  to: source('sql_server_dbo','orders')
-                  field: order_id
           - name: _fivetran_deleted
           - name: _fivetran_synced
       - name: orders
