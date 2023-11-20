@@ -80,6 +80,8 @@ models:
       - name: created_at
         data_type: timestamp_ntz
         description: ""
+        tests:
+              - not_null
 
       - name: date_loaded
         data_type: timestamp_tz
