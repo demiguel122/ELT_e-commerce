@@ -18,7 +18,7 @@ SELECT
     phone_number,
     address_id,
     created_date,
-    created_time,
+    created_time_utc,
     updated_date,
-    updated_time
+    updated_time_utc
 FROM stg_users

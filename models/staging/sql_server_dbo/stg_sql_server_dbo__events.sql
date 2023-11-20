@@ -19,7 +19,7 @@ renamed_casted AS (
          order_id,
          product_id,
          to_date(created_at) AS created_date,
-         to_time(created_at) AS created_time,
+         to_time(created_at) AS created_time_utc,
          _fivetran_synced AS date_loaded
     FROM src_events
     )

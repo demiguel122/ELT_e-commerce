@@ -15,7 +15,7 @@ WITH generate_time AS
 dim_time_with_null AS (
     SELECT
         date_second,
-        date_second AS time,
+        date_second AS time_utc,
         CASE 
             WHEN date_second < '12:00:00' THEN 'am'
             ELSE 'pm' END AS am_or_pm
@@ -26,6 +26,6 @@ dim_time_with_null AS (
 
 SELECT
     {{ dbt_utils.generate_surrogate_key(['date_second']) }} AS time_key,
-    time,
+    time_utc,
     am_or_pm
 FROM dim_time_with_null

@@ -18,6 +18,6 @@ SELECT
     {{ dbt_utils.generate_surrogate_key(['order_id']) }} AS order_key,
     {{ dbt_utils.generate_surrogate_key(['product_id']) }} AS product_key,
     {{ dbt_utils.generate_surrogate_key(['created_date']) }} AS created_date_key,
-    {{ dbt_utils.generate_surrogate_key(['created_time']) }} AS created_time_key,
+    {{ dbt_utils.generate_surrogate_key(['created_time_utc']) }} AS created_time_utc_key,
     date_loaded
 FROM stg_events

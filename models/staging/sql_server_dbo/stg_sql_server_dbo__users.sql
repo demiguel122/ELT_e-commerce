@@ -9,7 +9,7 @@ WITH src_users AS (
     FROM {{ source('sql_server_dbo', 'users') }}
     ),
 
-renamed_casted AS (
+stg_users AS (
     SELECT
          user_id,
          first_name,
@@ -18,11 +18,11 @@ renamed_casted AS (
          phone_number,
          address_id,
          to_date(created_at) AS created_date,
-         to_time(created_at) AS created_time,
+         to_time(created_at) AS created_time_utc,
          to_date(updated_at) AS updated_date,
-         to_time(updated_at) AS updated_time,
+         to_time(updated_at) AS updated_time_utc,
          _fivetran_synced AS date_loaded
     FROM src_users
     )
 
-SELECT * FROM renamed_casted
+SELECT * FROM stg_users
