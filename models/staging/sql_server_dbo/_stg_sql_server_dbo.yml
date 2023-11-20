@@ -77,7 +77,13 @@ models:
         data_type: varchar
         description: ""
 
-      - name: created_at
+      - name: created_date
+        data_type: timestamp_ntz
+        description: ""
+        tests:
+              - not_null
+
+      - name: created_time_utc
         data_type: timestamp_ntz
         description: ""
         tests:
@@ -128,11 +134,19 @@ models:
         data_type: varchar
         description: ""
 
-      - name: created_at
+      - name: created_date
         data_type: timestamp_tz
         description: ""
+        tests:
+              - not_null
+      
+      - name: created_time_utc
+        data_type: timestamp_tz
+        description: ""
+        tests:
+              - not_null
 
-      - name: order_cost
+      - name: order_cost_usd
         data_type: float
         description: ""
 
@@ -144,11 +158,11 @@ models:
         data_type: varchar
         description: ""
 
-      - name: shipping_cost
+      - name: shipping_cost_usd
         data_type: float
         description: ""
 
-      - name: order_total
+      - name: order_total_usd
         data_type: float
         description: ""
 
@@ -156,11 +170,19 @@ models:
         data_type: varchar
         description: ""
 
-      - name: estimated_delivery_at
+      - name: estimated_delivery_date
         data_type: timestamp_tz
         description: ""
 
-      - name: delivered_at
+      - name: estimated_delivery_time_utc
+        data_type: timestamp_tz
+        description: ""
+
+      - name: delivered_date
+        data_type: timestamp_tz
+        description: ""
+      
+      - name: delivered_time_utc
         data_type: timestamp_tz
         description: ""
 
@@ -191,7 +213,7 @@ models:
         data_type: varchar
         description: ""
 
-      - name: price
+      - name: price_usd
         data_type: float
         description: ""
         tests:
@@ -218,7 +240,7 @@ models:
               - unique 
               - not_null
 
-      - name: discount
+      - name: discount_usd
         data_type: number
         description: ""
         tests:
@@ -262,11 +284,23 @@ models:
         data_type: varchar
         description: ""
 
-      - name: created_at
+      - name: created_date
         data_type: timestamp_tz
         description: ""
+        tests: 
+              - not_null
+      
+      - name: created_time_utc
+        data_type: timestamp_tz
+        description: ""
+        tests: 
+              - not_null
 
-      - name: updated_at
+      - name: updated_date
+        data_type: timestamp_tz
+        description: ""
+      
+      - name: updated_time_utc
         data_type: timestamp_tz
         description: ""
 
