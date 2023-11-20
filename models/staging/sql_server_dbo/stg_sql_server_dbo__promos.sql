@@ -19,7 +19,7 @@ stg_promos AS (
             'Optional', 'optional',
             'Mandatory', 'mandatory',
             'Digitized', 'digitized') AS promo_id,
-         discount_usd,
+         discount AS discount_usd,
          status,
          _fivetran_synced AS date_loaded
     FROM src_promos
