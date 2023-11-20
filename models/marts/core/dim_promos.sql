@@ -8,7 +8,7 @@ WITH stg_promos AS
 (
     SELECT
         promo_id,
-        discount,
+        discount_usd,
         status
     FROM {{ ref('stg_sql_server_dbo__promos') }}
 ),
@@ -24,6 +24,6 @@ new_promo AS
 SELECT
     {{ dbt_utils.generate_surrogate_key(['promo_id']) }} promo_key,
     promo_id as promo_name,  
-    discount,
+    discount_usd,
     status
 FROM new_promo

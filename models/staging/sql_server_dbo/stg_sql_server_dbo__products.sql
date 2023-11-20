@@ -13,7 +13,7 @@ renamed_casted AS (
     SELECT
          product_id,
          name,
-         price,
+         price_usd,
          inventory,
          _fivetran_synced AS date_loaded
     FROM src_products

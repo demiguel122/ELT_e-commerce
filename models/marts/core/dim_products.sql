@@ -13,7 +13,7 @@ WITH stg_products AS
 SELECT
     {{ dbt_utils.generate_surrogate_key(['product_id']) }} AS product_key,
     name,
-    price,
+    price_usd,
     inventory,
     date_loaded
 FROM stg_products
