@@ -25,19 +25,10 @@ union_all_with_duplicates AS
     FROM distinct_stg_users
 ),
 
-detecting_duplicates AS 
+without_duplicates AS 
 (
-    SELECT
-        address_id,
-        ROW_NUMBER() OVER (PARTITION BY address_id ORDER BY address_id) AS count
+    SELECT DISTINCT(address_id)
     FROM union_all_with_duplicates
-),
-
-only_unique_ids AS 
-(
-    SELECT address_id
-    FROM detecting_duplicates
-    WHERE count = 1
 )
 
 SELECT
@@ -47,6 +38,6 @@ SELECT
     state,
     country,
     date_loaded
-FROM only_unique_ids
+FROM without_duplicates
 FULL JOIN {{ ref('stg_sql_server_dbo__addresses') }}
 USING(address_id)
