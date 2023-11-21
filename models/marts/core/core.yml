@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: fact_order_items
+    description: ""
+    columns:
+      - name: order_item_key
+        data_type: varchar
+        description: ""
+
+      - name: order_key
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+          - relationships:
+              field: order_key
+              to: ref('dim_orders')
+
+      - name: product_key
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+              - relationships:
+                  to: ref('dim_products')
+                  field: product_key
+
+      - name: quantity
+        data_type: number
+        description: ""
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""

@@ -47,7 +47,7 @@ order_items_allocations AS (
 SELECT
     {{ dbt_utils.generate_surrogate_key(['order_id', 'product_id']) }} AS order_item_key,
     {{ dbt_utils.generate_surrogate_key(['order_id']) }} AS order_key,
-    {{ dbt_utils.generate_surrogate_key(['product_id']) }} AS product_id,
+    {{ dbt_utils.generate_surrogate_key(['product_id']) }} AS product_key,
     quantity,
     order_cost_item_usd::DECIMAL(7,2) AS order_cost_item_usd,
     shipping_cost_item_usd::DECIMAL(7,2) AS shipping_cost_item_usd,
