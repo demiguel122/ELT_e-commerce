@@ -13,7 +13,7 @@ renamed_casted AS (
     SELECT
          order_id,
          product_id,
-         quantity,
+         quantity::INT AS quantity,
          _fivetran_synced AS date_loaded
     FROM src_order_items
     )

@@ -12,7 +12,7 @@ WITH src_budget AS (
 stg_budget AS (
     SELECT 
         product_id,
-        quantity,
+        quantity::INT AS quantity,
         month AS date,
         _fivetran_synced AS date_loaded
     FROM src_budget
