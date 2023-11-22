@@ -3,17 +3,17 @@ version: 2
 models:
   - name: stg_google_sheets__budget
     columns:
-      - name: product_id         
+      - name: product_key         
         tests:
           - not_null
           - relationships:
                 to: ref('stg_products')
-                field: product_id  
+                field: product_key  
       - name: quantity
         tests:
           - not_null
           - positive_values    
-      - name: date
+      - name: date_key
         tests:
           - not_null
       - name: date_loaded

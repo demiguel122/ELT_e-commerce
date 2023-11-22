@@ -4,7 +4,7 @@ models:
   - name: stg_sql_server_dbo__addresses
     description: ""
     columns:
-      - name: address_id
+      - name: address_key
         data_type: varchar
         description: ""
         tests:
@@ -41,25 +41,25 @@ models:
   - name: stg_sql_server_dbo__events
     description: ""
     columns:
-      - name: event_id
+      - name: event_key
         data_type: varchar
         description: ""
         tests:
               - unique
               - not_null
 
-      - name: event_type
+      - name: event_type_key
         data_type: varchar
         description: ""
 
-      - name: user_id
+      - name: user_key
         data_type: varchar
         description: ""
         tests:
               - not_null
               - relationships:
                   to: ref('stg_sql_server_dbo__users')
-                  field: user_id
+                  field: user_key
 
       - name: session_id
         data_type: varchar
@@ -69,21 +69,21 @@ models:
         data_type: varchar
         description: ""
 
-      - name: order_id
+      - name: order_key
         data_type: varchar
         description: ""
 
-      - name: product_id
+      - name: product_key
         data_type: varchar
         description: ""
 
-      - name: created_date
+      - name: created_date_key
         data_type: timestamp_ntz
         description: ""
         tests:
               - not_null
 
-      - name: created_time_utc
+      - name: created_time_utc_key
         data_type: timestamp_ntz
         description: ""
         tests:
@@ -95,23 +95,23 @@ models:
   - name: stg_sql_server_dbo__order_items
     description: ""
     columns:
-      - name: order_id
+      - name: order_key
         data_type: varchar
         description: ""
         tests: 
               - not_null
               - relationships:
                   to: ref('stg_sql_server_dbo__orders')
-                  field: order_id
+                  field: order_key
 
-      - name: product_id
+      - name: product_key
         data_type: varchar
         description: ""
         tests:
               - not_null
               - relationships:
                   to: ref('stg_sql_server_dbo__products')
-                  field: product_id
+                  field: product_key
 
       - name: quantity
         data_type: number
@@ -126,21 +126,21 @@ models:
   - name: stg_sql_server_dbo__orders
     description: ""
     columns:
-      - name: order_id
+      - name: order_key
         data_type: varchar
         description: ""
 
-      - name: user_id
+      - name: user_key
         data_type: varchar
         description: ""
 
-      - name: created_date
+      - name: created_date_key
         data_type: timestamp_tz
         description: ""
         tests:
               - not_null
       
-      - name: created_time_utc
+      - name: created_time_utc_key
         data_type: timestamp_tz
         description: ""
         tests:
@@ -166,23 +166,23 @@ models:
         data_type: float
         description: ""
 
-      - name: address_id
+      - name: address_key
         data_type: varchar
         description: ""
 
-      - name: estimated_delivery_date
+      - name: estimated_delivery_date_key
         data_type: timestamp_tz
         description: ""
 
-      - name: estimated_delivery_time_utc
+      - name: estimated_delivery_time_utc_key
         data_type: timestamp_tz
         description: ""
 
-      - name: delivered_date
+      - name: delivered_date_key
         data_type: timestamp_tz
         description: ""
       
-      - name: delivered_time_utc
+      - name: delivered_time_utc_key
         data_type: timestamp_tz
         description: ""
 
@@ -192,7 +192,7 @@ models:
         tests:
           - not_null
 
-      - name: promo_id
+      - name: promo_key
         data_type: varchar
         description: ""
 
@@ -202,7 +202,7 @@ models:
   - name: stg_sql_server_dbo__products
     description: ""
     columns:
-      - name: product_id
+      - name: product_key
         data_type: varchar
         description: ""
         tests:
@@ -233,7 +233,7 @@ models:
   - name: stg_sql_server_dbo__promos
     description: ""
     columns:
-      - name: promo_id
+      - name: promo_key
         data_type: varchar
         description: ""
         tests:
@@ -257,7 +257,7 @@ models:
   - name: stg_sql_server_dbo__users
     description: ""
     columns:
-      - name: user_id
+      - name: user_key
         data_type: varchar
         description: ""
         tests:
@@ -284,27 +284,27 @@ models:
         data_type: varchar
         description: ""
 
-      - name: address_id
+      - name: address_key
         data_type: varchar
         description: ""
 
-      - name: created_date
+      - name: created_date_key
         data_type: timestamp_tz
         description: ""
         tests: 
               - not_null
       
-      - name: created_time_utc
+      - name: created_time_utc_key
         data_type: timestamp_tz
         description: ""
         tests: 
               - not_null
 
-      - name: updated_date
+      - name: updated_date_key
         data_type: timestamp_tz
         description: ""
       
-      - name: updated_time_utc
+      - name: updated_time_utc_key
         data_type: timestamp_tz
         description: ""
 
