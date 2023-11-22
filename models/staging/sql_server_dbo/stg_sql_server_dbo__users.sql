@@ -28,10 +28,10 @@ stg_users AS (
          email,
          phone_number,
          {{ dbt_utils.generate_surrogate_key(['address_id']) }} AS address_key,
-         {{ dbt_utils.generate_surrogate_key(['created_date']) }} AS created_date_key,
-         {{ dbt_utils.generate_surrogate_key(['created_time_utc']) }} AS created_time_utc_key,
-         {{ dbt_utils.generate_surrogate_key(['updated_date']) }} AS updated_date_key,
-         {{ dbt_utils.generate_surrogate_key(['updated_time_utc']) }} AS updated_time_utc_key,
+         created_date,
+         created_time_utc,
+         updated_date,
+         updated_time_utc,
          date_loaded
     FROM src_users
     )

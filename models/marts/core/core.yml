@@ -7,15 +7,24 @@ models:
       - name: order_item_key
         data_type: varchar
         description: ""
+        tests: 
+              - not_null
+              - unique
 
       - name: order_key
         data_type: varchar
         description: ""
+        tests: 
+              - not_null
+
+      - name: created_date_key
+        data_type: varchar
+        description: ""
         tests:
-          - not_null
-          - relationships:
-              field: order_key
-              to: ref('dim_orders')
+              - not_null
+              - relationships:
+                  to: ref('dim_date')
+                  field: date_key
 
       - name: product_key
         data_type: varchar
@@ -29,10 +38,109 @@ models:
       - name: quantity
         data_type: number
         description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: order_cost_item_usd
+        data_type: number
+        description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: shipping_cost_item_usd
+        data_type: number
+        description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: user_key
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+              - relationships:
+                  to: ref('dim_users')
+                  field: user_key
+
+      - name: status_key
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+              - relationships:
+                  to: ref('dim_status')
+                  field: status_key
+        
+
+      - name: shipping_service_key
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+              - relationships:
+                  to: ref('dim_shipping')
+                  field: shipping_service_key
+
+      - name: address_key
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+              - relationships:
+                  to: ref('dim_addresses')
+                  field: address_key
+
+      - name: estimated_delivery_date_key
+        data_type: varchar
+        description: ""
+        tests:
+              - relationships:
+                  to: ref('dim_date')
+                  field: date_key
+
+      - name: estimated_delivery_time_utc_key
+        data_type: varchar
+        description: ""
+        tests:
+              - relationships:
+                  to: ref('dim_time')
+                  field: time_key
+
+      - name: delivered_date_key
+        data_type: varchar
+        description: ""
+        tests:
+              - relationships:
+                  to: ref('dim_date')
+                  field: date_key
+
+      - name: delivered_time_utc_key
+        data_type: varchar
+        description: ""
+        tests:
+              - relationships:
+                  to: ref('dim_time')
+                  field: time_key
+
+      - name: tracking_id
+        data_type: varchar
+        description: ""
+
+      - name: promo_key
+        data_type: varchar
+        description: ""
+        tests:
+              - relationships:
+                  to: ref('dim_promos')
+                  field: promo_key
 
       - name: date_loaded
         data_type: timestamp_tz
         description: ""
+
   - name: fact_events
     description: ""
     columns:
@@ -46,6 +154,11 @@ models:
       - name: event_type_key
         data_type: varchar
         description: ""
+        tests:
+              - not_null
+              - relationships:
+                  to: ref('dim_event_type')
+                  field: event_type_key
 
       - name: user_key
         data_type: varchar
@@ -59,6 +172,8 @@ models:
       - name: session_id
         data_type: varchar
         description: ""
+        tests:
+              - not_null
 
       - name: order_key
         data_type: varchar
@@ -67,22 +182,33 @@ models:
       - name: product_key
         data_type: varchar
         description: ""
+        tests:
+              - relationships:
+                  to: ref('dim_product')
+                  field: product_key
 
       - name: created_date_key
         data_type: varchar
         description: ""
         tests:
               - not_null
+              - relationships:
+                  to: ref('dim_date')
+                  field: date_key
 
       - name: created_time_utc_key
         data_type: varchar
         description: ""
         tests:
               - not_null
+              - relationships:
+                  to: ref('dim_time')
+                  field: time_key
 
       - name: date_loaded
         data_type: timestamp_tz
         description: ""
+
   - name: fact_budget
     description: ""
     columns:
@@ -106,7 +232,10 @@ models:
         data_type: varchar
         description: ""
         tests:
-          - not_null
+              - not_null
+              - relationships:
+                  to: ref('dim_date')
+                  field: date_key
 
       - name: quantity
         data_type: number
@@ -118,6 +247,7 @@ models:
       - name: date_loaded
         data_type: timestamp_tz
         description: ""
+
   - name: dim_users
     description: ""
     columns:
@@ -151,23 +281,226 @@ models:
       - name: address_key
         data_type: varchar
         description: ""
+        tests:
+              - not_null
+              - relationships:
+                  to: ref('dim_addresses')
+                  field: address_key
 
-      - name: created_date_key
+      - name: created_date
         data_type: varchar
         description: ""
         tests:
               - not_null
 
-      - name: created_time_utc_key
+      - name: created_time_utc
         data_type: varchar
         description: ""
         tests:
               - not_null
 
-      - name: updated_date_key
+      - name: updated_date
         data_type: varchar
         description: ""
 
-      - name: updated_time_utc_key
+      - name: updated_time_utc
+        data_type: varchar
+        description: ""
+  
+  - name: dim_status
+    description: ""
+    columns:
+      - name: status_key
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+          - unique
+
+      - name: status
+        data_type: varchar
+        description: ""
+  
+  - name: dim_shipping
+    description: ""
+    columns:
+      - name: shipping_service_key
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+          - unique
+
+      - name: shipping_service
+        data_type: varchar
+        description: ""
+
+  - name: dim_promos
+    description: ""
+    columns:
+      - name: promo_key
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+          - unique
+
+      - name: promo_name
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+
+      - name: discount_usd
+        data_type: number
+        description: ""
+        tests:
+          - not_null
+          - positive_values
+
+      - name: status
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""
+  
+  - name: dim_products
+    description: ""
+    columns:
+      - name: product_key
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+          - unique
+
+      - name: name
+        data_type: varchar
+        description: ""
+
+      - name: price_usd
+        data_type: float
+        description: ""
+
+      - name: inventory
+        data_type: number
+        description: ""
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""
+  
+  - name: dim_event_type
+    description: ""
+    columns:
+      - name: event_type_key
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+          - unique
+
+      - name: event_type
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+
+  - name: dim_addresses
+    description: ""
+    columns:
+      - name: address_key
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+          - unique
+
+      - name: address
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+
+      - name: zipcode
+        data_type: number
+        description: ""
+        tests:
+          - not_null
+          - positive_values
+
+      - name: state
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+
+      - name: country
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""
+  
+  - name: dim_date
+    description: ""
+    columns:
+      - name: date_key
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+          - unique
+
+      - name: date
+        data_type: date
+        description: ""
+
+      - name: day_of_month
+        data_type: number
+        description: ""
+
+      - name: month_of_year
+        data_type: number
+        description: ""
+
+      - name: year_number
+        data_type: number
+        description: ""
+
+      - name: day_of_week
+        data_type: varchar
+        description: ""
+
+      - name: week_of_year
+        data_type: number
+        description: ""
+
+      - name: quarter_of_year
+        data_type: number
+        description: ""
+
+  - name: dim_time
+    description: ""
+    columns:
+      - name: time_key
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+          - unique
+
+      - name: time_utc
+        data_type: time
+        description: ""
+
+      - name: am_or_pm
         data_type: varchar
         description: ""

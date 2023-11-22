@@ -133,6 +133,8 @@ models:
       - name: user_key
         data_type: varchar
         description: ""
+        tests: 
+              - not_null
 
       - name: created_date_key
         data_type: timestamp_tz
