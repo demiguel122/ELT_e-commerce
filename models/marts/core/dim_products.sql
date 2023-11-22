@@ -44,4 +44,4 @@ SELECT *
 FROM without_duplicates
 FULL JOIN
 {{ ref('stg_sql_server_dbo__products') }} AS stg_products
-USING (product_id)
+USING (product_key)

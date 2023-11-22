@@ -17,7 +17,7 @@ WITH src_events AS (
         to_time(created_at) AS created_time_utc,
         _fivetran_synced AS date_loaded
     FROM {{ source('sql_server_dbo', 'events') }}
-    ),
+    )
 
 SELECT
     {{ dbt_utils.generate_surrogate_key(['event_id']) }} AS event_key,

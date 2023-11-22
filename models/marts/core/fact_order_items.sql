@@ -30,6 +30,7 @@ stg_products AS
 
 order_items_allocations AS (
     SELECT
+        order_item_key,
         order_key,
         product_key,
         quantity,

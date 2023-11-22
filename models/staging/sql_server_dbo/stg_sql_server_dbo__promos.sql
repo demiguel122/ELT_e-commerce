@@ -17,8 +17,7 @@ new_promo AS (
     SELECT *
     FROM src_promos
     UNION ALL
-    SELECT 'no promo', 0, 'not applicable'
-    FROM src_promos
+    SELECT 'no promo', 0, 'not applicable', NULL
     )
 
 SELECT

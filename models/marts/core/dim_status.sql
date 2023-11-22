@@ -6,7 +6,7 @@
 
 WITH distinct_statuses AS 
 (
-    SELECT DISTINCT status_key 
+    SELECT DISTINCT status_key, status
     FROM {{ ref('stg_sql_server_dbo__orders') }}
 )
 

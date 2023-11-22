@@ -42,7 +42,7 @@ WITH src_orders AS (
             '', 'no promo') AS promo_id,
         _fivetran_synced AS date_loaded 
     FROM {{ source('sql_server_dbo', 'orders') }}
-    ),
+    )
 
 SELECT
     {{ dbt_utils.generate_surrogate_key(['order_id']) }} AS order_key,
