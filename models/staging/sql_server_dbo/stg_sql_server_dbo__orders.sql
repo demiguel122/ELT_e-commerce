@@ -5,19 +5,14 @@
 }}
 
 WITH src_orders AS (
-    SELECT * 
-    FROM {{ source('sql_server_dbo', 'orders') }}
-    ),
-
-stg_orders AS (
     SELECT
-         order_id,
-         user_id,
-         to_date(created_at) AS created_date,
-         to_time(created_at) AS created_time_utc,
-         order_cost::DECIMAL(7, 2) AS order_cost_usd,
-         status,
-         decode (
+        order_id,
+        user_id,
+        to_date(created_at) AS created_date,
+        to_time(created_at) AS created_time_utc,
+        order_cost::DECIMAL(7, 2) AS order_cost_usd,
+        status,
+        decode (
             shipping_service,
             'ups', 'ups',
             'usps', 'usps',
@@ -25,18 +20,18 @@ stg_orders AS (
             'dhl', 'dhl',
             '', 'pending'
          ) AS shipping_service,
-         shipping_cost::DECIMAL(7, 2) AS shipping_cost_usd,
-         order_total::DECIMAL(7, 2) AS order_total_usd,
-         address_id,
-         to_date(estimated_delivery_at) AS estimated_delivery_date,
-         to_time(estimated_delivery_at) AS estimated_delivery_time_utc,
-         to_date(delivered_at) AS delivered_date,
-         to_time(delivered_at) AS delivered_time_utc,
-         CASE 
+        shipping_cost::DECIMAL(7, 2) AS shipping_cost_usd,
+        order_total::DECIMAL(7, 2) AS order_total_usd,
+        address_id,
+        to_date(estimated_delivery_at) AS estimated_delivery_date,
+        to_time(estimated_delivery_at) AS estimated_delivery_time_utc,
+        to_date(delivered_at) AS delivered_date,
+        to_time(delivered_at) AS delivered_time_utc,
+        CASE 
             WHEN tracking_id = '' THEN 'pending'
             ELSE tracking_id
             END AS tracking_id,
-         decode
+        decode
             (promo_id,
             'task-force', 'task-force',
             'instruction set', 'instruction set',
@@ -45,8 +40,23 @@ stg_orders AS (
             'Mandatory', 'mandatory',
             'Digitized', 'digitized',
             '', 'no promo') AS promo_id,
-         _fivetran_synced AS date_loaded
-    FROM src_orders
-    )
+        _fivetran_synced AS date_loaded 
+    FROM {{ source('sql_server_dbo', 'orders') }}
+    ),
 
-SELECT * FROM stg_orders
+SELECT
+    {{ dbt_utils.generate_surrogate_key(['order_id']) }} AS order_key,
+    {{ dbt_utils.generate_surrogate_key(['user_id']) }} AS user_key,
+    {{ dbt_utils.generate_surrogate_key(['created_date']) }} AS created_date_key,
+    {{ dbt_utils.generate_surrogate_key(['created_time_utc']) }} AS created_time_utc_key,
+    {{ dbt_utils.generate_surrogate_key(['status']) }} AS status_key,
+    {{ dbt_utils.generate_surrogate_key(['shipping_service']) }} AS shipping_service_key,
+    {{ dbt_utils.generate_surrogate_key(['address_id']) }} AS address_key,
+    {{ dbt_utils.generate_surrogate_key(['estimated_delivery_date']) }} AS estimated_delivery_date_key,
+    {{ dbt_utils.generate_surrogate_key(['estimated_delivery_time_utc']) }} AS estimated_delivery_time_utc_key,
+    {{ dbt_utils.generate_surrogate_key(['delivered_date']) }} AS delivered_date_key,
+    {{ dbt_utils.generate_surrogate_key(['delivered_time_utc']) }} AS delivered_time_utc_key,
+    tracking_id,
+    {{ dbt_utils.generate_surrogate_key(['promo_id']) }} AS promo_key,
+    date_loaded
+FROM src_orders

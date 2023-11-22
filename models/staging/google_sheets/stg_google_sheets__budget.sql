@@ -10,10 +10,11 @@ WITH src_budget AS (
     ),
 
 stg_budget AS (
-    SELECT 
-        product_id,
+    SELECT
+        {{ dbt_utils.generate_surrogate_key(['product_id', 'date']) }} AS budget_key,
+        {{ dbt_utils.generate_surrogate_key(['product_id']) }} AS product_key,
+        {{ dbt_utils.generate_surrogate_key(['month']) }} AS date_key,
         quantity::INT AS quantity,
-        month AS date,
         _fivetran_synced AS date_loaded
     FROM src_budget
     )

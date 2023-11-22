@@ -9,14 +9,15 @@ WITH src_products AS (
     FROM {{ source('sql_server_dbo', 'products') }}
     ),
 
-renamed_casted AS (
+stg_products AS (
     SELECT
-         product_id,
-         name,
-         price AS price_usd,
-         inventory,
-         _fivetran_synced AS date_loaded
+        {{ dbt_utils.generate_surrogate_key(['product_id']) }} AS product_key,
+        name,
+        price AS price_usd,
+        inventory,
+        _fivetran_synced AS date_loaded
     FROM src_products
     )
 
-SELECT * FROM renamed_casted
+SELECT * 
+FROM stg_products

@@ -5,24 +5,25 @@
 }}
 
 WITH src_promos AS (
-    SELECT * 
+    SELECT
+        lower(promo_id) AS promo_id,
+        discount AS discount_usd,
+        status,
+        _fivetran_synced AS date_loaded
     FROM {{ source('sql_server_dbo', 'promos') }}
     ),
 
-stg_promos AS (
-    SELECT
-        decode
-            (promo_id,
-            'task-force', 'task-force',
-            'instruction set', 'instruction set',
-            'leverage', 'leverage',
-            'Optional', 'optional',
-            'Mandatory', 'mandatory',
-            'Digitized', 'digitized') AS promo_id,
-         discount AS discount_usd,
-         status,
-         _fivetran_synced AS date_loaded
+new_promo AS (
+    SELECT *
+    FROM src_promos
+    UNION ALL
+    SELECT 'no promo', 0, 'not applicable'
     FROM src_promos
     )
 
-SELECT * FROM stg_promos
+SELECT
+    {{ dbt_utils.generate_surrogate_key(['promo_id']) }} promo_key,
+    promo_id as promo_name,  
+    discount_usd,
+    status
+FROM new_promo
