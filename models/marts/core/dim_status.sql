@@ -6,11 +6,11 @@
 
 WITH distinct_statuses AS 
 (
-    SELECT DISTINCT status 
+    SELECT DISTINCT status_key 
     FROM {{ ref('stg_sql_server_dbo__orders') }}
 )
 
 SELECT
-    {{ dbt_utils.generate_surrogate_key(['status']) }} AS status_key,
+    status_key,
     status
 FROM distinct_statuses

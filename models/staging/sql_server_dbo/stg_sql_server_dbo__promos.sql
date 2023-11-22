@@ -25,5 +25,6 @@ SELECT
     {{ dbt_utils.generate_surrogate_key(['promo_id']) }} promo_key,
     promo_id as promo_name,  
     discount_usd,
-    status
+    status,
+    date_loaded
 FROM new_promo
