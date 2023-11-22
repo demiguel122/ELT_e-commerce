@@ -5,7 +5,7 @@
 }}
 
 WITH stg_event_types AS (
-    SELECT DISTINCT event_type_key
+    SELECT DISTINCT event_type_key, event_type
     FROM {{ ref('stg_sql_server_dbo__events') }}
 )
 

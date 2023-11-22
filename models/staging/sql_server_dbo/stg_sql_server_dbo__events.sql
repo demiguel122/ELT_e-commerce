@@ -22,6 +22,7 @@ WITH src_events AS (
 SELECT
     {{ dbt_utils.generate_surrogate_key(['event_id']) }} AS event_key,
     {{ dbt_utils.generate_surrogate_key(['event_type', 'page_url']) }} AS event_type_key,
+    event_type,
     {{ dbt_utils.generate_surrogate_key(['user_id']) }} AS user_key,
     session_id,
     page_url,
