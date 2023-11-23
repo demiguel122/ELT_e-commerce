@@ -28,12 +28,12 @@ order_items_allocations AS (
     SELECT
         order_item_key,
         order_key,
+        user_key,
         created_date_key,
         product_key,
         quantity,
         price_usd AS order_cost_item_usd,
         (price_usd / order_total_usd) * shipping_cost_usd AS shipping_cost_item_usd,
-        user_key,
         status_key,
         shipping_service_key,
         address_key,
