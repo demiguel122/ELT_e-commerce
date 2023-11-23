@@ -1,0 +1,315 @@
+version: 2
+
+models:
+  - name: stg_sql_server_dbo__addresses
+    description: ""
+    columns:
+      - name: address_key
+        data_type: varchar
+        description: ""
+        tests:
+              - unique
+              - not_null
+
+      - name: address
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+
+      - name: zipcode
+        data_type: number
+        description: ""
+        tests:
+          - not_null
+
+      - name: state
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+
+      - name: country
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""
+  - name: stg_sql_server_dbo__events
+    description: ""
+    columns:
+      - name: event_key
+        data_type: varchar
+        description: ""
+        tests:
+              - unique
+              - not_null
+
+      - name: event_type_key
+        data_type: varchar
+        description: ""
+
+      - name: user_key
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+              - relationships:
+                  to: ref('stg_sql_server_dbo__users')
+                  field: user_key
+
+      - name: session_id
+        data_type: varchar
+        description: ""
+
+      - name: page_url
+        data_type: varchar
+        description: ""
+
+      - name: order_key
+        data_type: varchar
+        description: ""
+
+      - name: product_key
+        data_type: varchar
+        description: ""
+
+      - name: created_date_key
+        data_type: timestamp_ntz
+        description: ""
+        tests:
+              - not_null
+
+      - name: created_time_utc_key
+        data_type: timestamp_ntz
+        description: ""
+        tests:
+              - not_null
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""
+  - name: stg_sql_server_dbo__order_items
+    description: ""
+    columns:
+      - name: order_key
+        data_type: varchar
+        description: ""
+        tests: 
+              - not_null
+              - relationships:
+                  to: ref('stg_sql_server_dbo__orders')
+                  field: order_key
+
+      - name: product_key
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+              - relationships:
+                  to: ref('stg_sql_server_dbo__products')
+                  field: product_key
+
+      - name: quantity
+        data_type: number
+        description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""
+  - name: stg_sql_server_dbo__orders
+    description: ""
+    columns:
+      - name: order_key
+        data_type: varchar
+        description: ""
+
+      - name: user_key
+        data_type: varchar
+        description: ""
+        tests: 
+              - not_null
+
+      - name: created_date_key
+        data_type: timestamp_tz
+        description: ""
+        tests:
+              - not_null
+      
+      - name: created_time_utc_key
+        data_type: timestamp_tz
+        description: ""
+        tests:
+              - not_null
+
+      - name: order_cost_usd
+        data_type: float
+        description: ""
+
+      - name: status
+        data_type: varchar
+        description: ""
+
+      - name: shipping_service
+        data_type: varchar
+        description: ""
+
+      - name: shipping_cost_usd
+        data_type: float
+        description: ""
+
+      - name: order_total_usd
+        data_type: float
+        description: ""
+
+      - name: address_key
+        data_type: varchar
+        description: ""
+
+      - name: estimated_delivery_date_key
+        data_type: timestamp_tz
+        description: ""
+
+      - name: estimated_delivery_time_utc_key
+        data_type: timestamp_tz
+        description: ""
+
+      - name: delivered_date_key
+        data_type: timestamp_tz
+        description: ""
+      
+      - name: delivered_time_utc_key
+        data_type: timestamp_tz
+        description: ""
+
+      - name: tracking_id
+        data_type: varchar
+        description: ""
+        tests:
+          - not_null
+
+      - name: promo_key
+        data_type: varchar
+        description: ""
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""
+  - name: stg_sql_server_dbo__products
+    description: ""
+    columns:
+      - name: product_key
+        data_type: varchar
+        description: ""
+        tests:
+              - unique 
+              - not_null
+
+      - name: name
+        data_type: varchar
+        description: ""
+
+      - name: price_usd
+        data_type: float
+        description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: inventory
+        data_type: number
+        description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""
+  - name: stg_sql_server_dbo__promos
+    description: ""
+    columns:
+      - name: promo_key
+        data_type: varchar
+        description: ""
+        tests:
+              - unique 
+              - not_null
+
+      - name: discount_usd
+        data_type: number
+        description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: status
+        data_type: varchar
+        description: ""
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""
+  - name: stg_sql_server_dbo__users
+    description: ""
+    columns:
+      - name: user_key
+        data_type: varchar
+        description: ""
+        tests:
+              - unique 
+              - not_null
+
+      - name: first_name
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+
+      - name: last_name
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+
+      - name: email
+        data_type: varchar
+        description: ""
+
+      - name: phone_number
+        data_type: varchar
+        description: ""
+
+      - name: address_key
+        data_type: varchar
+        description: ""
+
+      - name: created_date_utc
+        data_type: timestamp_tz
+        description: ""
+        tests: 
+              - not_null
+      
+      - name: created_time
+        data_type: timestamp_tz
+        description: ""
+        tests: 
+              - not_null
+
+      - name: updated_date_utc
+        data_type: timestamp_tz
+        description: ""
+      
+      - name: updated_time
+        data_type: timestamp_tz
+        description: ""
+
+      - name: date_loaded
+        data_type: timestamp_tz
+        description: ""

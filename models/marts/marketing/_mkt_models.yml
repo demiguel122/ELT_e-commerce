@@ -1,0 +1,114 @@
+version: 2
+
+models:
+  - name: customers
+    description: ""
+    columns:
+      - name: user_key
+        data_type: varchar
+        description: ""
+        tests:
+              - unique
+              - not_null
+
+      - name: first_name
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+
+      - name: last_name
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+
+      - name: email
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+
+      - name: phone_number
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+
+      - name: created_date_utc
+        data_type: date
+        description: ""
+        tests:
+              - not_null
+
+      - name: updated_date_utc
+        data_type: date
+        description: ""
+        tests:
+              - not_null
+
+      - name: address
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+
+      - name: zipcode
+        data_type: number
+        description: ""
+        tests:
+              - not_null
+
+      - name: state
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+
+      - name: country
+        data_type: varchar
+        description: ""
+        tests:
+              - not_null
+
+      - name: total_no_orders
+        data_type: number
+        description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: total_order_cost_usd
+        data_type: number
+        description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: total_shipping_cost_usd
+        data_type: number
+        description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: total_discount_usd
+        data_type: number
+        description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: total_quantity_product
+        data_type: number
+        description: ""
+        tests:
+              - not_null
+              - positive_values
+
+      - name: total_diff_products
+        data_type: number
+        description: ""
+        tests:
+              - not_null
+              - positive_values
