@@ -39,7 +39,7 @@ WITH cte1 AS (
     SELECT
     session_id,
     created_time_utc_key,
-    ROW_NUMBER() OVER (PARTITION BY session_id ORDER BY created_time_utc_key) AS wf
+    DENSE_RANK() OVER (PARTITION BY session_id ORDER BY created_time_utc_key ASC) AS wf
 FROM {{ ref("fact_events") }}
 )
 
@@ -58,18 +58,18 @@ WITH cte2 AS (
     SELECT
         session_id,
         created_time_utc_key,
-        RANK() OVER (PARTITION BY session_id ORDER BY created_time_utc_key DESC) AS wf_rank
+        DENSE_RANK() OVER (PARTITION BY session_id ORDER BY created_time_utc_key DESC) AS wf
     FROM {{ ref("fact_events") }}
 )
 
 SELECT
     session_id,
     time_utc,
-    wf_rank
+    wf
 FROM cte2
 JOIN {{ ref("dim_time") }} AS t
     ON cte2.created_time_utc_key = t.time_key
-WHERE wf_rank = 1
+WHERE wf = 1
 
 -------------------------
 
