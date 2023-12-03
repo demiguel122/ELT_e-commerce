@@ -169,7 +169,7 @@ models:
                   to: ref('dim_users')
                   field: user_key
 
-      - name: session_id
+      - name: session_key
         data_type: varchar
         description: ""
         tests:

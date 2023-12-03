@@ -290,13 +290,13 @@ models:
         data_type: varchar
         description: ""
 
-      - name: created_date_utc
+      - name: created_date
         data_type: timestamp_tz
         description: ""
         tests: 
               - not_null
       
-      - name: created_time
+      - name: created_time_utc
         data_type: timestamp_tz
         description: ""
         tests: 
