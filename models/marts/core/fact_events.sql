@@ -14,7 +14,7 @@ SELECT
     event_key,
     event_type_key,
     user_key,
-    session_id,
+    session_key,
     order_key,
     product_key,
     created_date_key,

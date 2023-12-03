@@ -24,7 +24,7 @@ SELECT
     {{ dbt_utils.generate_surrogate_key(['event_type', 'page_url']) }} AS event_type_key,
     event_type,
     {{ dbt_utils.generate_surrogate_key(['user_id']) }} AS user_key,
-    session_id,
+    {{ dbt_utils.generate_surrogate_key(['session_id']) }} AS session_key,
     page_url,
     {{ dbt_utils.generate_surrogate_key(['order_id']) }} AS order_key,
     {{ dbt_utils.generate_surrogate_key(['product_id']) }} AS product_key,

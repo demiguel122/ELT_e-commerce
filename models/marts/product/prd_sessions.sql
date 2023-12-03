@@ -15,66 +15,36 @@ dim_users AS (
         first_name,
         email
     FROM {{ ref("dim_users") }}
+),
+
+int_session_lenghts AS (
+    SELECT
+        *
+    FROM {{ ref("int_session_lengths") }}
+),
+
+int_event_types_count AS (
+    SELECT
+        *
+    FROM {{ ref("int_event_types_count") }}
 )
 
-SELECT
+SELECT DISTINCT
     session_key,
     user_key,
     first_name,
     email,
-    AS first_event_time_utc,
-    AS last_event_time_utc,
-    AS session_length_minutes,
-    AS page_view,
-    AS add_to_cart,
-    AS checkout,
-    AS package_shipped
+    first_event_time_utc,
+    last_event_time_utc,
+    session_length_minutes,
+    page_view,
+    add_to_cart,
+    checkout,
+    package_shipped
 FROM fact_events
 JOIN dim_users
 USING(user_key)
-
--------------------------------
-
-WITH cte1 AS (
-    SELECT
-    session_id,
-    created_time_utc_key,
-    DENSE_RANK() OVER (PARTITION BY session_id ORDER BY created_time_utc_key ASC) AS wf
-FROM {{ ref("fact_events") }}
-)
-
-SELECT
-    session_id,
-    time_utc,
-    wf
-FROM cte1
-JOIN {{ ref("dim_time") }} AS t
-ON cte1.created_time_utc_key = t.time_key
-WHERE wf = 1
-
---------------------------
-
-WITH cte2 AS (
-    SELECT
-        session_id,
-        created_time_utc_key,
-        DENSE_RANK() OVER (PARTITION BY session_id ORDER BY created_time_utc_key DESC) AS wf
-    FROM {{ ref("fact_events") }}
-)
-
-SELECT
-    session_id,
-    time_utc,
-    wf
-FROM cte2
-JOIN {{ ref("dim_time") }} AS t
-    ON cte2.created_time_utc_key = t.time_key
-WHERE wf = 1
-
--------------------------
-
-SELECT
-    TIMEDIFF
-FROM cte1
-JOIN cte2
-USING
+JOIN int_session_lenghts
+USING(session_key)
+JOIN int_event_types_count
+USING (session_key)
