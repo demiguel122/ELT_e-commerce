@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: fact_order_items
+  - name: fct_order_items
     description: "Fact table containing information about order items."
     columns:
       - name: order_item_key
@@ -140,7 +140,7 @@ models:
         data_type: timestamp_tz
         description: "Timestamp representing when the data was loaded."
 
-  - name: fact_events
+  - name: fct_events
     description: "Fact table containing information about events."
     columns:
       - name: event_key
@@ -208,7 +208,7 @@ models:
         data_type: timestamp_tz
         description: "Timestamp representing when the data was loaded."
 
-  - name: fact_budget
+  - name: fct_budget
     description: "Fact table containing budget information."
     columns:
       - name: budget_key

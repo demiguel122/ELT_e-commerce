@@ -34,7 +34,7 @@ dim_promos AS (
     FROM {{ ref("dim_promos") }}
 ),
 
-fact_order_items AS (
+fct_order_items AS (
     SELECT
         user_key,
         order_key,
@@ -43,7 +43,7 @@ fact_order_items AS (
         promo_key,
         quantity,
         product_key
-    FROM {{ ref("fact_order_items") }}
+    FROM {{ ref("fct_order_items") }}
 )
 
 SELECT
@@ -67,7 +67,7 @@ SELECT
 FROM dim_users
 JOIN dim_addresses
 USING(address_key)
-JOIN fact_order_items
+JOIN fct_order_items
 USING(user_key)
 JOIN dim_promos
 USING(promo_key)

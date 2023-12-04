@@ -4,9 +4,9 @@
   )
 }}
 
-WITH fact_events AS (
+WITH fct_events AS (
     SELECT *
-    FROM {{ ref("fact_events") }}
+    FROM {{ ref("fct_events") }}
 ),
 
 dim_users AS (
@@ -41,7 +41,7 @@ SELECT DISTINCT
     add_to_cart,
     checkout,
     package_shipped
-FROM fact_events
+FROM fct_events
 JOIN dim_users
 USING(user_key)
 JOIN int_session_lenghts

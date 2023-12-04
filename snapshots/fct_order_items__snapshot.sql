@@ -1,7 +1,12 @@
+{% snapshot fct_order_items__snapshot %}
+
 {{
-  config(
-    materialized='table'
-  )
+    config(
+      target_schema='snapshots',
+      unique_key='order_item_key',
+      strategy='timestamp',
+      updated_at='date_loaded',
+    )
 }}
 
 WITH stg_order_items AS 
@@ -71,3 +76,5 @@ SELECT
     promo_key,
     date_loaded
 FROM order_items_allocations
+
+{% endsnapshot %}
