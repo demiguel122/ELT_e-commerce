@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: prd_sessions
+  - name: int_session_lengths
     description: ""
     columns:
       - name: session_key
@@ -9,24 +9,6 @@ models:
         description: ""
         tests:
               - unique
-              - not_null
-
-      - name: user_key
-        data_type: varchar
-        description: ""
-        tests:
-              - not_null
-
-      - name: first_name
-        data_type: varchar
-        description: ""
-        tests:
-              - not_null
-
-      - name: email
-        data_type: varchar
-        description: ""
-        tests:
               - not_null
 
       - name: first_event_time_utc
@@ -47,6 +29,16 @@ models:
         tests:
               - not_null
               - positive_values
+  
+  - name: int_event_types_count
+    description: ""
+    columns:
+      - name: session_key
+        data_type: varchar
+        description: ""
+        tests:
+              - unique
+              - not_null
 
       - name: page_view
         data_type: number
