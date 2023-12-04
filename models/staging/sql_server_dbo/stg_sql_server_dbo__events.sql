@@ -1,6 +1,6 @@
 {{
   config(
-    materialized='view'
+    materialized='incremental'
   )
 }}
 
@@ -17,6 +17,11 @@ WITH src_events AS (
         to_time(created_at) AS created_time_utc,
         _fivetran_synced AS date_loaded
     FROM {{ source('sql_server_dbo', 'events') }}
+{% if is_incremental() %}
+
+	  where date_loaded > (select max(date_loaded) from {{ this }})
+
+{% endif %}
     )
 
 SELECT
