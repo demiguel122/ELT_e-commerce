@@ -2,113 +2,113 @@ version: 2
 
 models:
   - name: customers
-    description: ""
+    description: "Model representing customer information."
     columns:
       - name: user_key
         data_type: varchar
-        description: ""
+        description: "Primary key for customers."
         tests:
-              - unique
-              - not_null
+          - unique
+          - not_null
 
       - name: first_name
         data_type: varchar
-        description: ""
+        description: "First name of the customer."
         tests:
-              - not_null
+          - not_null
 
       - name: last_name
         data_type: varchar
-        description: ""
+        description: "Last name of the customer."
         tests:
-              - not_null
+          - not_null
 
       - name: email
         data_type: varchar
-        description: ""
+        description: "Email address of the customer."
         tests:
-              - not_null
+          - not_null
 
       - name: phone_number
         data_type: varchar
-        description: ""
+        description: "Phone number of the customer."
         tests:
-              - not_null
+          - not_null
 
       - name: created_date_utc
         data_type: date
-        description: ""
+        description: "Creation date of the customer record in UTC."
         tests:
-              - not_null
+          - not_null
 
       - name: updated_date_utc
         data_type: date
-        description: ""
+        description: "Last update date of the customer record in UTC."
         tests:
-              - not_null
+          - not_null
 
       - name: address
         data_type: varchar
-        description: ""
+        description: "Street address of the customer."
         tests:
-              - not_null
+          - not_null
 
       - name: zipcode
         data_type: number
-        description: ""
+        description: "Zip code of the customer's address."
         tests:
-              - not_null
+          - not_null
 
       - name: state
         data_type: varchar
-        description: ""
+        description: "State of the customer's address."
         tests:
-              - not_null
+          - not_null
 
       - name: country
         data_type: varchar
-        description: ""
+        description: "Country of the customer's address."
         tests:
-              - not_null
+          - not_null
 
       - name: total_no_orders
         data_type: number
-        description: ""
+        description: "Total number of orders placed by the customer."
         tests:
-              - not_null
-              - positive_values
+          - not_null
+          - positive_values
 
       - name: total_order_cost_usd
         data_type: number
-        description: ""
+        description: "Total cost of all orders placed by the customer in USD."
         tests:
-              - not_null
-              - positive_values
+          - not_null
+          - positive_values
 
       - name: total_shipping_cost_usd
         data_type: number
-        description: ""
+        description: "Total shipping cost of all orders placed by the customer in USD."
         tests:
-              - not_null
-              - positive_values
+          - not_null
+          - positive_values
 
       - name: total_discount_usd
         data_type: number
-        description: ""
+        description: "Total discount applied to all orders placed by the customer in USD."
         tests:
-              - not_null
-              - positive_values
+          - not_null
+          - positive_values
 
       - name: total_quantity_product
         data_type: number
-        description: ""
+        description: "Total quantity of products ordered by the customer."
         tests:
-              - not_null
-              - positive_values
+          - not_null
+          - positive_values
 
       - name: total_diff_products
         data_type: number
-        description: ""
+        description: "Total number of different products ordered by the customer."
         tests:
-              - not_null
-              - positive_values
+          - not_null
+          - positive_values
