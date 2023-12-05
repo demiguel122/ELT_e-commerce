@@ -1,4 +1,4 @@
-{% snapshot stg_users__snapshot %}
+{% snapshot dim_users__snapshot %}
 
 {{
     config(

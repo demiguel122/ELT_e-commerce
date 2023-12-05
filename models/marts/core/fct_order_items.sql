@@ -8,6 +8,11 @@ WITH fct_order_items__snapshot AS
 (
     SELECT *
     FROM {{ ref("fct_order_items__snapshot") }}
+{% if is_incremental() %}
+
+	  where date_loaded > (select max(date_loaded) from {{ this }})
+
+{% endif %}
 )
 
 SELECT
@@ -27,6 +32,7 @@ SELECT
     delivered_date_key,
     delivered_time_utc_key,
     tracking_id,
-    promo_key
+    promo_key,
+    date_loaded
 FROM fct_order_items__snapshot
 WHERE dbt_valid_to IS NULL

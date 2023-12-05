@@ -1,14 +1,19 @@
 {{
   config(
-    materialized='table'
+    materialized='incremental'
   )
 }}
 
-WITH stg_promos AS 
+WITH dim_promos__snapshot AS 
 (
     SELECT *
-    FROM {{ ref('stg_sql_server_dbo__promos') }}
+    FROM {{ ref('dim_promos__snapshot') }}
 )
 
-SELECT *
-FROM stg_promos
+SELECT
+    promo_key,
+    promo_name,
+    discount_usd,
+    status
+FROM dim_promos__snapshot
+WHERE dbt_valid_to IS NULL

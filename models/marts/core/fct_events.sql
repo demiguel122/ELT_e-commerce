@@ -23,5 +23,6 @@ SELECT
     order_key,
     product_key,
     created_date_key,
-    created_time_utc_key
+    created_time_utc_key,
+    date_loaded
 FROM stg_events

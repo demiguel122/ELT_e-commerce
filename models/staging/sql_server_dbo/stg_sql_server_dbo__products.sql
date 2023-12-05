@@ -1,23 +1,19 @@
 {{
   config(
-    materialized='view'
+    materialized='incremental'
   )
 }}
 
-WITH src_products AS (
+WITH dim_products__snapshot AS (
     SELECT * 
-    FROM {{ source('sql_server_dbo', 'products') }}
-    ),
-
-stg_products AS (
-    SELECT
-        {{ dbt_utils.generate_surrogate_key(['product_id']) }} AS product_key,
-        name,
-        price AS price_usd,
-        inventory,
-        _fivetran_synced AS date_loaded
-    FROM src_products
+    FROM {{ ref('dim_products__snapshot') }}
     )
 
-SELECT * 
-FROM stg_products
+SELECT
+    product_key,
+    name,
+    price_usd,
+    inventory
+FROM dim_products__snapshot
+WHERE dbt_valid_to IS NULL
+

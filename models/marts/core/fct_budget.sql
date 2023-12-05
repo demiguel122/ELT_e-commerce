@@ -15,5 +15,10 @@ WITH stg_budget AS
 {% endif %}
 )
 
-SELECT *
+SELECT
+    budget_key,
+    product_key,
+    date_key,
+    quantity,
+    date_loaded
 FROM stg_budget
