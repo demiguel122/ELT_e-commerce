@@ -1,17 +1,12 @@
-{{ config(
-    materialized='incremental',
-    unique_key = 'budget_key'
-    ) 
-    }}
+{{
+  config(
+    materialized='view'
+  )
+}}
 
 WITH src_budget AS (
     SELECT *
     FROM {{ source('google_sheets', 'budget') }}
-{% if is_incremental() %}
-
-	  where _fivetran_synced > (select max(date_loaded) from {{ this }})
-
-{% endif %}
     ),
 
 stg_budget AS (

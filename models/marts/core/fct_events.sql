@@ -1,6 +1,6 @@
 {{
   config(
-    materialized='table'
+    materialized='incremental'
   )
 }}
 
@@ -8,6 +8,11 @@ WITH stg_events AS
 (
     SELECT *
     FROM {{ ref("stg_sql_server_dbo__events") }}
+{% if is_incremental() %}
+
+	  where date_loaded > (select max(date_loaded) from {{ this }})
+
+{% endif %}
 )
 
 SELECT
