@@ -45,7 +45,12 @@ without_duplicates AS
     FROM union_all_with_duplicates
 )
 
-SELECT *
+SELECT
+    product_key,
+    name,
+    price_usd,
+    inventory,
+    date_loaded
 FROM without_duplicates
 FULL JOIN
 {{ ref('stg_sql_server_dbo__products') }} AS stg_products
