@@ -10,7 +10,7 @@ WITH distinct_stg_addresses AS
     FROM {{ ref('stg_sql_server_dbo__addresses') }}
 {% if is_incremental() %}
 
-	  where date_loaded > (select max(date_loaded) from {{ this }})
+	  where stg_sql_server_dbo__addresses.date_loaded > (select max(this.date_loaded) from {{ this }} as this)
 
 {% endif %}
 ),
@@ -21,7 +21,7 @@ distinct_stg_users AS
     FROM {{ ref('stg_sql_server_dbo__users') }}
 {% if is_incremental() %}
 
-	  where date_loaded > (select max(date_loaded) from {{ this }})
+	  where stg_sql_server_dbo__users.date_loaded > (select max(this.date_loaded) from {{ this }} as this)
 
 {% endif %}
 ),

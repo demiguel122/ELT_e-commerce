@@ -1,6 +1,6 @@
 {{
   config(
-    materialized='table'
+    materialized='incremental'
   )
 }}
 
@@ -13,8 +13,14 @@ WITH dim_users AS (
         phone_number,
         created_date,
         updated_date,
-        address_key
+        address_key,
+        date_loaded
     FROM {{ ref("dim_users") }}
+{% if is_incremental() %}
+
+	  where dim_users.date_loaded > (select max(this.date_loaded) from {{ this }} as this)
+
+{% endif %}
 ),
 
 dim_addresses AS (
@@ -23,15 +29,27 @@ dim_addresses AS (
         address,
         zipcode,
         state,
-        country
+        country,
+        date_loaded
     FROM {{ ref("dim_addresses") }}
+{% if is_incremental() %}
+
+	  where dim_addresses.date_loaded > (select max(this.date_loaded) from {{ this }} as this)
+
+{% endif %}
 ),
 
 dim_promos AS (
     SELECT
         promo_key,
-        discount_usd
+        discount_usd,
+        date_loaded
     FROM {{ ref("dim_promos") }}
+{% if is_incremental() %}
+
+	  where dim_promos.date_loaded > (select max(this.date_loaded) from {{ this }} as this)
+
+{% endif %}
 ),
 
 fct_order_items AS (
@@ -44,6 +62,11 @@ fct_order_items AS (
         quantity,
         product_key
     FROM {{ ref("fct_order_items") }}
+{% if is_incremental() %}
+
+	  where fct_order_items.date_loaded > (select max(this.date_loaded) from {{ this }} as this)
+
+{% endif %}
 )
 
 SELECT
@@ -63,7 +86,8 @@ SELECT
     SUM(shipping_cost_item_usd) AS total_shipping_cost_usd,
     SUM(discount_usd) AS total_discount_usd,
     SUM(quantity) AS total_quantity_product,
-    COUNT(DISTINCT product_key) AS total_diff_products
+    COUNT(DISTINCT product_key) AS total_diff_products,
+    date_loaded
 FROM dim_users
 JOIN dim_addresses
 USING(address_key)
@@ -82,4 +106,5 @@ GROUP BY
     address,
     zipcode,
     state,
-    country
+    country,
+    date_loaded

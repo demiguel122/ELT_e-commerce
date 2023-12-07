@@ -10,7 +10,7 @@ WITH fct_order_items__snapshot AS
     FROM {{ ref("fct_order_items__snapshot") }}
 {% if is_incremental() %}
 
-	  where date_loaded > (select max(date_loaded) from {{ this }})
+	  where fct_order_items__snapshot.date_loaded > (select max(this.date_loaded) from {{ this }} as this)
 
 {% endif %}
 )

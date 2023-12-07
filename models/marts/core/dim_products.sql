@@ -1,47 +1,24 @@
 {{
   config(
-    materialized='table'
+    materialized='incremental'
   )
 }}
 
-WITH distinct_stg_order_items AS 
-(
-    SELECT DISTINCT product_key 
-    FROM {{ ref('stg_sql_server_dbo__order_items') }}
-),
-
-distinct_stg_events AS 
-(
-    SELECT DISTINCT product_key 
-    FROM {{ ref('stg_sql_server_dbo__events') }}
-),
-
-distinct_stg_budget AS 
-(
-    SELECT DISTINCT product_key 
-    FROM {{ ref('stg_google_sheets__budget') }}
-),
-
-union_all_with_duplicates AS 
-(
+WITH dim_products__snapshot AS (
     SELECT *
-    FROM distinct_stg_order_items
-    UNION ALL
-    SELECT *
-    FROM distinct_stg_events
-    UNION ALL
-    SELECT *
-    FROM distinct_stg_budget
-),
+    FROM {{ ref('dim_products__snapshot') }}
+{% if is_incremental() %}
 
-without_duplicates AS 
-(
-    SELECT DISTINCT product_key
-    FROM union_all_with_duplicates
+	  where dim_products__snapshot.date_loaded > (select max(this.date_loaded) from {{ this }} as this)
+
+{% endif %}
 )
 
-SELECT *
-FROM without_duplicates
-FULL JOIN
-{{ ref('stg_sql_server_dbo__products') }} AS stg_products
-USING (product_key)
+SELECT
+    product_key,
+    name,
+    price_usd,
+    inventory,
+    date_loaded
+FROM dim_products__snapshot
+WHERE dbt_valid_to IS NULL

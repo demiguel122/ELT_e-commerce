@@ -10,7 +10,7 @@ WITH stg_budget AS
     FROM {{ ref('stg_google_sheets__budget') }}
 {% if is_incremental() %}
 
-	  where date_loaded > (select max(date_loaded) from {{ this }})
+	  where stg_google_sheets__budget.date_loaded > (select max(this.date_loaded) from {{ this }} as this)
 
 {% endif %}
 )
