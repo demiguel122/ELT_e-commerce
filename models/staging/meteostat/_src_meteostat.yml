@@ -1,0 +1,49 @@
+version: 2
+
+sources:
+
+  - name: meteostat # name of the source 
+    schema: meteostat # this is the schema our raw data lives in
+    database: ALUMNO7_DEV_BRONZE_DB # this is the name of our database
+
+    quoting:
+      database: false
+      schema: false
+      identifier: false
+
+    freshness:
+      warn_after: {count: 32, period: day}
+      error_after: {count: 33, period: day}
+
+    tables:
+      - name: weather_data
+        description: "Table containing historical weather data by zipcode."
+        columns:
+          - name: zipcode
+            description: ""
+            tests:
+              - not_null
+          - name: date
+            description: ""
+            tests:
+              - not_null
+          - name: date_key
+            description: ""
+            tests:
+              - not_null
+          - name: avg_temperature_celsius
+            description: ""
+            tests:
+              - not_null
+          - name: min_temperature_celsius
+            description: ""
+            tests:
+              - not_null
+          - name: max_temperature_celsius
+            description: ""
+            tests:
+              - not_null
+          - name: precipitation
+            description: ""
+            tests:
+              - not_null
