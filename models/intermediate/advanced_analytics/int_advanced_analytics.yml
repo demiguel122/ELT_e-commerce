@@ -16,7 +16,7 @@ models:
         tests:
           - not_null
       
-      - name: product_key
+      - name: most_sold_product_key
         data_type: varchar
         description: "The key identifying the most sold product for the specified zipcode and date."
         tests:
