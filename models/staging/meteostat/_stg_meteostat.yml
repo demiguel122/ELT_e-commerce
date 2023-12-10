@@ -1,0 +1,47 @@
+version: 2
+
+models:
+  - name: stg_meteostat__weather_data
+    description: "Staging model for Meteostat weather data."
+    columns:
+      - name: zipcode
+        data_type: varchar
+        description: "The postal code representing a specific geographic area."
+        tests:
+          - not_null
+          - relationships:
+              field: zipcode
+              to: ref('stg_sql_server_dbo__addresses')
+
+      - name: date_key
+        data_type: varchar
+        description: "Foreign key referencing the date dimension table (dim_date)."
+        tests:
+          - not_null
+          - relationships:
+              field: date_key
+              to: ref('dim_date')
+
+      - name: avg_temperature_celsius
+        data_type: number
+        description: "The average temperature recorded in Celsius for the specified date and location."
+        tests:
+          - not_null
+
+      - name: min_temperature_celsius
+        data_type: number
+        description: "The minimum temperature recorded in Celsius for the specified date and location."
+        tests:
+          - not_null
+
+      - name: max_temperature_celsius
+        data_type: number
+        description: "The maximum temperature recorded in Celsius for the specified date and location."
+        tests:
+          - not_null
+
+      - name: precipitation
+        data_type: number
+        description: "The amount of precipitation (rain, snow, etc.) recorded in millimeters for the specified date and location."
+        tests:
+          - not_null

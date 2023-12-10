@@ -20,7 +20,7 @@ WITH ranked_products AS (
 SELECT
     zipcode,
     created_date_key,
-    product_key,
+    product_key AS most_sold_product_key,
     units_sold
 FROM ranked_products
 WHERE product_rank = 1

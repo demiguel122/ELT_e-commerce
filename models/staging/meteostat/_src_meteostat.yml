@@ -1,10 +1,9 @@
 version: 2
 
 sources:
-
-  - name: meteostat # name of the source 
-    schema: meteostat # this is the schema our raw data lives in
-    database: ALUMNO7_DEV_BRONZE_DB # this is the name of our database
+  - name: meteostat
+    schema: meteostat
+    database: ALUMNO7_DEV_BRONZE_DB
 
     quoting:
       database: false
@@ -20,30 +19,26 @@ sources:
         description: "Table containing historical weather data by zipcode."
         columns:
           - name: zipcode
-            description: ""
+            description: "The postal code representing a specific geographic area."
             tests:
               - not_null
           - name: date
-            description: ""
-            tests:
-              - not_null
-          - name: date_key
-            description: ""
+            description: "The date for which the weather data is recorded."
             tests:
               - not_null
           - name: avg_temperature_celsius
-            description: ""
+            description: "The average temperature recorded in Celsius for the specified date and location."
             tests:
               - not_null
           - name: min_temperature_celsius
-            description: ""
+            description: "The minimum temperature recorded in Celsius for the specified date and location."
             tests:
               - not_null
           - name: max_temperature_celsius
-            description: ""
+            description: "The maximum temperature recorded in Celsius for the specified date and location."
             tests:
               - not_null
           - name: precipitation
-            description: ""
+            description: "The amount of precipitation (rain, snow, etc.) recorded in millimeters for the specified date and location."
             tests:
               - not_null
