@@ -50,11 +50,15 @@ models:
         +schema: google_sheets
       sql_server_dbo:
         +schema: sql_server_dbo
+      meteostat:
+        +schema: meteostat
 
     intermediate:
-      +materialized: table
+      +materialized: ephemeral
       +database: "{{ env_var('DBT_ENVIRONMENTS') }}_SILVER_DB"
       product:
+        +schema: intermediate
+      advanced_analytics:
         +schema: intermediate
       
     marts:
@@ -66,6 +70,8 @@ models:
         +schema: marketing
       product:
         +schema: product
+      advanced_analytics:
+        +schema: advanced_analytics
 seeds:
   +schema: seed_data
   +database: "{{ env_var('DBT_ENVIRONMENTS') }}_BRONZE_DB"        

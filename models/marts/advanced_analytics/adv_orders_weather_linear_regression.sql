@@ -24,5 +24,5 @@ SELECT
     b.max_temperature_celsius,
     b.precipitation
 FROM int_most_sold_product_per_zipcode AS a
-JOIN stg_meteostat__weather_data AS b
+JOIN stg_weather_data AS b
 ON a.zipcode = b.zipcode AND a.created_date_key = b.date_key
