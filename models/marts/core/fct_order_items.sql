@@ -1,7 +1,7 @@
-{{
-  config(
-    materialized='incremental'
-  )
+{{ config(
+    materialized='incremental',
+    unique_key = 'order_item_key'
+    ) 
 }}
 
 WITH fct_order_items__snapshot AS 

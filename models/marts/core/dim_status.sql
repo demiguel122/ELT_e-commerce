@@ -1,7 +1,7 @@
-{{
-  config(
-    materialized='incremental'
-  )
+{{ config(
+    materialized='incremental',
+    unique_key = 'status_key'
+    ) 
 }}
 
 WITH distinct_statuses AS 

@@ -1,7 +1,7 @@
-{{
-  config(
-    materialized='view'
-  )
+{{ config(
+    materialized='incremental',
+    unique_key = 'order_item_key'
+    ) 
 }}
 
 WITH src_order_items AS (
@@ -11,6 +11,11 @@ WITH src_order_items AS (
         quantity::INT AS quantity,
         _fivetran_synced AS date_loaded
     FROM {{ source('sql_server_dbo', 'order_items') }}
+{% if is_incremental() %}
+
+	  where _fivetran_synced > (select max(date_loaded) from {{ this }})
+
+{% endif %}
     )
 
 SELECT

@@ -1,7 +1,7 @@
-{{
-  config(
-    materialized='view'
-  )
+{{ config(
+    materialized='incremental',
+    unique_key = 'promo_key'
+    ) 
 }}
 
 WITH src_promos AS (
@@ -11,6 +11,11 @@ WITH src_promos AS (
         status,
         _fivetran_synced AS date_loaded
     FROM {{ source('sql_server_dbo', 'promos') }}
+{% if is_incremental() %}
+
+	  where _fivetran_synced > (select max(date_loaded) from {{ this }})
+
+{% endif %}
     ),
 
 new_promo AS (

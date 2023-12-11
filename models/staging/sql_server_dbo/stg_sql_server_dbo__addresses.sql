@@ -1,7 +1,7 @@
-{{
-  config(
-    materialized='view'
-  )
+{{ config(
+    materialized='incremental',
+    unique_key = 'address_key'
+    ) 
 }}
 
 WITH src_addresses AS (
@@ -13,6 +13,11 @@ WITH src_addresses AS (
         country,
         _fivetran_synced AS date_loaded
     FROM {{ source('sql_server_dbo', 'addresses') }}
+{% if is_incremental() %}
+
+	  where _fivetran_synced > (select max(date_loaded) from {{ this }})
+
+{% endif %}
 )
 
 SELECT 
