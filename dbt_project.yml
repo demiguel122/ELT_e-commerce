@@ -77,5 +77,5 @@ seeds:
   +database: "{{ env_var('DBT_ENVIRONMENTS') }}_BRONZE_DB"        
 snapshots:
   +transient: false
-  +target_database: "{{ env_var('DBT_ENVIRONMENTS') }}_SILVER_DB"
+  +target_database: "{{ env_var('DBT_ENVIRONMENTS') }}_GOLD_DB"
   +target_schema: snapshots
