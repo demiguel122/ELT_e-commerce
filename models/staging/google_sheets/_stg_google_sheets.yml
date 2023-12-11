@@ -2,20 +2,25 @@ version: 2
 
 models:
   - name: stg_google_sheets__budget
+    description: "Staging table for budget data from Google Sheets."
     columns:
-      - name: product_key         
+      - name: product_key
+        description: "Foreign key referencing the product associated with the budget entry."
         tests:
           - not_null
           - relationships:
-                to: ref('stg_products')
-                field: product_key  
+              to: ref('stg_products')
+              field: product_key
       - name: quantity
+        description: "Quantity of the product in the budget entry."
         tests:
           - not_null
-          - positive_values    
+          - positive_values
       - name: date_key
+        description: "Key representing the date of the budget entry."
         tests:
           - not_null
       - name: date_loaded
+        description: "Timestamp indicating when the budget data was loaded."
         tests:
           - not_null

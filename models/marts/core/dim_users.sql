@@ -1,47 +1,31 @@
 {{
   config(
-    materialized='table'
+    materialized='incremental'
   )
 }}
 
-WITH distinct_stg_orders AS 
+WITH dim_users__snapshot AS 
 (
-    SELECT DISTINCT user_key 
-    FROM {{ ref('stg_sql_server_dbo__orders') }}
-),
+    SELECT * 
+    FROM {{ ref('dim_users__snapshot') }}
+{% if is_incremental() %}
 
-distinct_stg_events AS 
-(
-    SELECT DISTINCT user_key
-    FROM {{ ref('stg_sql_server_dbo__events') }}
-),
+	  where dim_users__snapshot.date_loaded > (select max(this.date_loaded) from {{ this }} as this)
 
-distinct_stg_users AS 
-(
-    SELECT DISTINCT user_key
-    FROM {{ ref('stg_sql_server_dbo__users') }}
-),
-
-union_all_with_duplicates AS 
-(
-    SELECT *
-    FROM distinct_stg_orders
-    UNION ALL
-    SELECT *
-    FROM distinct_stg_events
-    UNION ALL
-    SELECT *
-    FROM distinct_stg_users
-),
-
-without_duplicates AS 
-(
-    SELECT DISTINCT(user_key)
-    FROM union_all_with_duplicates
+{% endif %}
 )
 
-SELECT *
-FROM without_duplicates
-FULL JOIN
-{{ ref('stg_sql_server_dbo__users') }} AS users
-USING (user_key)
+SELECT
+    user_key,
+    first_name,
+    last_name,
+    email,
+    phone_number,
+    address_key,
+    created_date,
+    created_time_utc,
+    updated_date,
+    updated_time_utc,
+    date_loaded
+FROM dim_users__snapshot
+WHERE dbt_valid_to IS NULL

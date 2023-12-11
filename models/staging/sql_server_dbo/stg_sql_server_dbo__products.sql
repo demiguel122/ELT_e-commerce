@@ -21,3 +21,4 @@ stg_products AS (
 
 SELECT * 
 FROM stg_products
+

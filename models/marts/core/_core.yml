@@ -1,506 +1,504 @@
 version: 2
 
 models:
-  - name: fact_order_items
-    description: ""
+  - name: fct_order_items
+    description: "Fact table containing information about order items."
     columns:
       - name: order_item_key
         data_type: varchar
-        description: ""
+        description: "Primary key for order items."
         tests: 
-              - not_null
-              - unique
+          - not_null
+          - unique
 
       - name: order_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the orders table."
         tests: 
-              - not_null
+          - not_null
 
       - name: created_date_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the date dimension for the created date."
         tests:
-              - not_null
-              - relationships:
-                  to: ref('dim_date')
-                  field: date_key
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
 
       - name: product_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the products dimension."
         tests:
-              - not_null
-              - relationships:
-                  to: ref('dim_products')
-                  field: product_key
+          - not_null
+          - relationships:
+              to: ref('dim_products')
+              field: product_key
 
       - name: quantity
         data_type: number
-        description: ""
+        description: "Quantity of items in the order."
         tests:
-              - not_null
-              - positive_values
+          - not_null
+          - positive_values
 
       - name: order_cost_item_usd
         data_type: number
-        description: ""
+        description: "Cost of the item in USD."
         tests:
-              - not_null
-              - positive_values
+          - not_null
+          - positive_values
 
       - name: shipping_cost_item_usd
         data_type: number
-        description: ""
+        description: "Shipping cost of the item in USD."
         tests:
-              - not_null
-              - positive_values
+          - not_null
+          - positive_values
 
       - name: user_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the users dimension."
         tests:
-              - not_null
-              - relationships:
-                  to: ref('dim_users')
-                  field: user_key
+          - not_null
+          - relationships:
+              to: ref('dim_users')
+              field: user_key
 
       - name: status_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the status dimension."
         tests:
-              - not_null
-              - relationships:
-                  to: ref('dim_status')
-                  field: status_key
-        
+          - not_null
+          - relationships:
+              to: ref('dim_status')
+              field: status_key
 
       - name: shipping_service_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the shipping dimension."
         tests:
-              - not_null
-              - relationships:
-                  to: ref('dim_shipping')
-                  field: shipping_service_key
+          - not_null
+          - relationships:
+              to: ref('dim_shipping')
+              field: shipping_service_key
 
       - name: address_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the addresses dimension."
         tests:
-              - not_null
-              - relationships:
-                  to: ref('dim_addresses')
-                  field: address_key
+          - not_null
+          - relationships:
+              to: ref('dim_addresses')
+              field: address_key
 
       - name: estimated_delivery_date_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the date dimension for estimated delivery date."
         tests:
-              - relationships:
-                  to: ref('dim_date')
-                  field: date_key
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
 
       - name: estimated_delivery_time_utc_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the time dimension for estimated delivery time in UTC."
         tests:
-              - relationships:
-                  to: ref('dim_time')
-                  field: time_key
+          - relationships:
+              to: ref('dim_time')
+              field: time_key
 
       - name: delivered_date_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the date dimension for delivered date."
         tests:
-              - relationships:
-                  to: ref('dim_date')
-                  field: date_key
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
 
       - name: delivered_time_utc_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the time dimension for delivered time in UTC."
         tests:
-              - relationships:
-                  to: ref('dim_time')
-                  field: time_key
+          - relationships:
+              to: ref('dim_time')
+              field: time_key
 
       - name: tracking_id
         data_type: varchar
-        description: ""
+        description: "Tracking ID of the order item."
 
       - name: promo_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the promos dimension."
         tests:
-              - relationships:
-                  to: ref('dim_promos')
-                  field: promo_key
+          - relationships:
+              to: ref('dim_promos')
+              field: promo_key
 
       - name: date_loaded
         data_type: timestamp_tz
-        description: ""
+        description: "Timestamp representing when the data was loaded."
 
-  - name: fact_events
-    description: ""
+  - name: fct_events
+    description: "Fact table containing information about events."
     columns:
       - name: event_key
         data_type: varchar
-        description: ""
+        description: "Primary key for events."
         tests:
-              - unique
-              - not_null
+          - unique
+          - not_null
 
       - name: event_type_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the event types dimension."
         tests:
-              - not_null
-              - relationships:
-                  to: ref('dim_event_type')
-                  field: event_type_key
+          - not_null
+          - relationships:
+              to: ref('dim_event_type')
+              field: event_type_key
 
       - name: user_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the users dimension."
         tests:
-              - not_null
-              - relationships:
-                  to: ref('dim_users')
-                  field: user_key
+          - not_null
+          - relationships:
+              to: ref('dim_users')
+              field: user_key
 
-      - name: session_id
+      - name: session_key
         data_type: varchar
-        description: ""
+        description: "Session key for events."
         tests:
-              - not_null
+          - not_null
 
       - name: order_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the orders table."
 
       - name: product_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the products dimension."
         tests:
-              - relationships:
-                  to: ref('dim_product')
-                  field: product_key
+          - relationships:
+              to: ref('dim_product')
+              field: product_key
 
       - name: created_date_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the date dimension for the created date."
         tests:
-              - not_null
-              - relationships:
-                  to: ref('dim_date')
-                  field: date_key
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
 
       - name: created_time_utc_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the time dimension for created time in UTC."
         tests:
-              - not_null
-              - relationships:
-                  to: ref('dim_time')
-                  field: time_key
+          - not_null
+          - relationships:
+              to: ref('dim_time')
+              field: time_key
 
       - name: date_loaded
         data_type: timestamp_tz
-        description: ""
+        description: "Timestamp representing when the data was loaded."
 
-  - name: fact_budget
-    description: ""
+  - name: fct_budget
+    description: "Fact table containing budget information."
     columns:
       - name: budget_key
         data_type: varchar
-        description: ""
+        description: "Primary key for budget entries."
         tests:
           - unique
           - not_null
 
       - name: product_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the products dimension."
         tests:
           - not_null
           - relationships:
-                to: ref('dim_products')
-                field: product_key 
+              to: ref('dim_products')
+              field: product_key 
 
       - name: date_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the date dimension for the budget entry."
         tests:
-              - not_null
-              - relationships:
-                  to: ref('dim_date')
-                  field: date_key
+          - not_null
+          - relationships:
+              to: ref('dim_date')
+              field: date_key
 
       - name: quantity
         data_type: number
-        description: ""
+        description: "Quantity related to the budget entry."
         tests:
           - not_null
           - positive_values
 
       - name: date_loaded
         data_type: timestamp_tz
-        description: ""
+        description: "Timestamp representing when the data was loaded."
 
   - name: dim_users
-    description: ""
+    description: "Dimension table containing user information."
     columns:
       - name: user_key
         data_type: varchar
-        description: ""
+        description: "Primary key for users."
         tests:
-              - unique 
-              - not_null
+          - unique 
+          - not_null
 
       - name: first_name
         data_type: varchar
-        description: ""
+        description: "First name of the user."
         tests:
-              - not_null
+          - not_null
 
       - name: last_name
         data_type: varchar
-        description: ""
+        description: "Last name of the user."
         tests:
-              - not_null
+          - not_null
 
       - name: email
         data_type: varchar
-        description: ""
+        description: "Email address of the user."
 
       - name: phone_number
         data_type: varchar
-        description: ""
+        description: "Phone number of the user."
 
       - name: address_key
         data_type: varchar
-        description: ""
+        description: "Foreign key referencing the address associated with the user."
         tests:
-              - not_null
-              - relationships:
-                  to: ref('dim_addresses')
-                  field: address_key
+          - not_null
+          - relationships:
+              to: ref('dim_addresses')
+              field: address_key
 
       - name: created_date
         data_type: varchar
-        description: ""
+        description: "Date when the user was created."
         tests:
-              - not_null
+          - not_null
 
       - name: created_time_utc
         data_type: varchar
-        description: ""
+        description: "Time (UTC) when the user was created."
         tests:
-              - not_null
+          - not_null
 
       - name: updated_date
         data_type: varchar
-        description: ""
+        description: "Date when the user was last updated."
 
       - name: updated_time_utc
         data_type: varchar
-        description: ""
-  
+        description: "Time (UTC) when the user was last updated."
+
   - name: dim_status
-    description: ""
+    description: "Dimension table containing status information."
     columns:
       - name: status_key
         data_type: varchar
-        description: ""
+        description: "Primary key for status entries."
         tests:
           - not_null
           - unique
 
       - name: status
         data_type: varchar
-        description: ""
-  
+        description: "Status description."
+
   - name: dim_shipping
-    description: ""
+    description: "Dimension table containing shipping service information."
     columns:
       - name: shipping_service_key
         data_type: varchar
-        description: ""
+        description: "Primary key for shipping services."
         tests:
           - not_null
           - unique
 
       - name: shipping_service
         data_type: varchar
-        description: ""
+        description: "Description of the shipping service."
 
   - name: dim_promos
-    description: ""
+    description: "Dimension table containing promotional information."
     columns:
       - name: promo_key
         data_type: varchar
-        description: ""
+        description: "Primary key for promotional entries."
         tests:
           - not_null
           - unique
 
       - name: promo_name
         data_type: varchar
-        description: ""
+        description: "Name of the promotional offer."
         tests:
           - not_null
 
       - name: discount_usd
         data_type: number
-        description: ""
+        description: "Discount amount in USD."
         tests:
           - not_null
           - positive_values
 
       - name: status
         data_type: varchar
-        description: ""
+        description: "Status of the promotional offer."
         tests:
           - not_null
 
       - name: date_loaded
         data_type: timestamp_tz
-        description: ""
-  
+        description: "Timestamp indicating when the data for the promotional offer was loaded."
+
   - name: dim_products
-    description: ""
+    description: "Dimension table containing product information."
     columns:
       - name: product_key
         data_type: varchar
-        description: ""
+        description: "Primary key for products."
         tests:
           - not_null
           - unique
 
       - name: name
         data_type: varchar
-        description: ""
+        description: "Name of the product."
 
       - name: price_usd
         data_type: float
-        description: ""
+        description: "Price of the product in USD."
 
       - name: inventory
         data_type: number
-        description: ""
+        description: "Inventory count for the product."
 
       - name: date_loaded
         data_type: timestamp_tz
-        description: ""
-  
+        description: "Timestamp indicating when the data for the product was loaded."
+
   - name: dim_event_type
-    description: ""
+    description: "Dimension table containing event type information."
     columns:
       - name: event_type_key
         data_type: varchar
-        description: ""
+        description: "Primary key for event types."
         tests:
           - not_null
           - unique
 
       - name: event_type
         data_type: varchar
-        description: ""
-        tests:
-          - not_null
+        description: "Description of the event type."
 
   - name: dim_addresses
-    description: ""
+    description: "Dimension table containing address information."
     columns:
       - name: address_key
         data_type: varchar
-        description: ""
+        description: "Primary key for addresses."
         tests:
           - not_null
           - unique
 
       - name: address
         data_type: varchar
-        description: ""
-        tests:
-          - not_null
+        description: "Street address."
 
       - name: zipcode
         data_type: number
-        description: ""
+        description: "Zip code of the address."
         tests:
           - not_null
           - positive_values
 
       - name: state
         data_type: varchar
-        description: ""
+        description: "State of the address."
         tests:
           - not_null
 
       - name: country
         data_type: varchar
-        description: ""
+        description: "Country of the address."
         tests:
           - not_null
 
       - name: date_loaded
         data_type: timestamp_tz
-        description: ""
-  
+        description: "Timestamp indicating when the data for the address was loaded."
+
   - name: dim_date
-    description: ""
+    description: "Dimension table containing date information."
     columns:
       - name: date_key
         data_type: varchar
-        description: ""
+        description: "Primary key for dates."
         tests:
           - not_null
           - unique
 
       - name: date
         data_type: date
-        description: ""
+        description: "Date value."
 
       - name: day_of_month
         data_type: number
-        description: ""
+        description: "Day of the month."
 
       - name: month_of_year
         data_type: number
-        description: ""
+        description: "Month of the year."
 
       - name: year_number
         data_type: number
-        description: ""
+        description: "Year number."
 
       - name: day_of_week
         data_type: varchar
-        description: ""
+        description: "Day of the week."
 
       - name: week_of_year
         data_type: number
-        description: ""
+        description: "Week of the year."
 
       - name: quarter_of_year
         data_type: number
-        description: ""
+        description: "Quarter of the year."
 
   - name: dim_time
-    description: ""
+    description: "Dimension table containing time information."
     columns:
       - name: time_key
         data_type: varchar
-        description: ""
+        description: "Primary key for times."
         tests:
           - not_null
           - unique
 
       - name: time_utc
         data_type: time
-        description: ""
+        description: "Time value in UTC."
 
       - name: am_or_pm
         data_type: varchar
-        description: ""
+        description: "AM or PM designation."
+
+  
+      

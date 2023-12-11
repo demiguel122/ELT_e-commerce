@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: int_most_sold_product_per_zipcode
+    description: "Intermediate model calculating the most sold product per combination of zipcode and date."
+    columns:
+      - name: zipcode
+        data_type: varchar
+        description: "The postal code representing a specific geographic area."
+        tests:
+          - not_null
+
+      - name: created_date_key
+        data_type: varchar
+        description: "The date key representing the creation date of the record."
+        tests:
+          - not_null
+      
+      - name: most_sold_product_key
+        data_type: varchar
+        description: "The key identifying the most sold product for the specified zipcode and date."
+        tests:
+          - not_null
+
+      - name: units_sold
+        data_type: number
+        description: "The number of units sold for the most sold product and the specified zipcode and date."
+        tests:
+          - not_null
+          - positive_values

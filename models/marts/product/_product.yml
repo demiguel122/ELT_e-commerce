@@ -1,0 +1,77 @@
+version: 2
+
+models:
+  - name: prd_sessions
+    description: "Model representing user sessions in a production environment."
+    columns:
+      - name: session_key
+        data_type: varchar
+        description: "Primary key for sessions."
+        tests:
+          - unique
+          - not_null
+
+      - name: user_key
+        data_type: varchar
+        description: "Foreign key referencing the user associated with the session."
+        tests:
+          - not_null
+
+      - name: first_name
+        data_type: varchar
+        description: "First name of the user associated with the session."
+        tests:
+          - not_null
+
+      - name: email
+        data_type: varchar
+        description: "Email address of the user associated with the session."
+        tests:
+          - not_null
+
+      - name: first_event_time_utc
+        data_type: timestamp_ntz
+        description: "UTC timestamp of the first event in the session."
+        tests:
+          - not_null
+
+      - name: last_event_time_utc
+        data_type: timestamp_ntz
+        description: "UTC timestamp of the last event in the session."
+        tests:
+          - not_null
+
+      - name: session_length_minutes
+        data_type: number
+        description: "Duration of the session in minutes."
+        tests:
+          - not_null
+          - positive_values
+
+      - name: page_view
+        data_type: number
+        description: "Number of page views in the session."
+        tests:
+          - not_null
+          - positive_values
+
+      - name: add_to_cart
+        data_type: number
+        description: "Number of 'add to cart' actions in the session."
+        tests:
+          - not_null
+          - positive_values
+
+      - name: checkout
+        data_type: number
+        description: "Number of checkout actions in the session."
+        tests:
+          - not_null
+          - positive_values
+
+      - name: package_shipped
+        data_type: number
+        description: "Number of packages shipped during the session."
+        tests:
+          - not_null
+          - positive_values

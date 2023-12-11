@@ -20,173 +20,231 @@ sources:
     tables:
 
       - name: addresses
+        description: "Table containing information about addresses."
         columns:
           - name: address_id
+            description: "Unique identifier for the address."
             tests:
               - unique
               - not_null
           - name: zipcode
+            description: "Postal code of the address."
             tests:
               - positive_values
               - not_null
           - name: country
+            description: "Country of the address."
             tests:
               - not_null
           - name: address
+            description: "The actual address."
             tests:
               - not_null
           - name: state
+            description: "State of the address."
             tests:
               - not_null
           - name: _fivetran_deleted
           - name: _fivetran_synced
+
       - name: events
+        description: "Table containing information about events."
         columns:
           - name: event_id
+            description: "Unique identifier for the event."
             tests:
               - unique 
               - not_null
           - name: page_url
+            description: "URL of the page associated with the event."
             tests:
               - not_null
           - name: event_type
+            description: "Type of the event."
             tests:
               - not_null
           - name: user_id
+            description: "Foreign key referencing the user associated with the event."
             tests:
               - not_null
               - relationships:
                   to: source('sql_server_dbo','users')
                   field: user_id
           - name: product_id
+            description: "Foreign key referencing the product associated with the event."
           - name: session_id
+            description: "Identifier for the session of the event."
             tests:
               - not_null
           - name: created_at
+            description: "Timestamp representing when the event was created."
             tests:
               - not_null
           - name: order_id
+            description: "Foreign key referencing the order associated with the event."
           - name: _fivetran_deleted
           - name: _fivetran_synced
+
       - name: orders
+        description: "Table containing information about orders."
         columns:
           - name: order_id
+            description: "Unique identifier for the order."
             tests:
               - unique 
               - not_null
           - name: shipping_service
+            description: "Shipping service used for the order."
           - name: shipping_cost
+            description: "Cost of shipping for the order."
             tests:
               - not_null
               - positive_values
           - name: address_id
+            description: "Foreign key referencing the address associated with the order."
             tests: 
               - not_null
           - name: created_at
+            description: "Timestamp representing when the order was created."
             tests: 
               - not_null
           - name: promo_id
+            description: "Foreign key referencing the promo associated with the order."
             tests: 
               - not_null
           - name: estimated_delivery_at
+            description: "Estimated delivery timestamp for the order."
           - name: order_cost
+            description: "Cost of the order."
             tests:
               - not_null
               - positive_values
           - name: user_id
+            description: "Foreign key referencing the user associated with the order."
             tests:
               - not_null
           - name: order_total
+            description: "Total cost of the order."
             tests:
               - not_null
               - positive_values
           - name: delivered_at
+            description: "Timestamp representing when the order was delivered."
           - name: tracking_id
+            description: "Tracking ID for the order."
           - name: status
+            description: "Status of the order."
             tests:
               - not_null
           - name: _fivetran_deleted
           - name: _fivetran_synced
+
       - name: order_items
+        description: "Table containing information about order items."
         columns:
           - name: order_id
+            description: "Foreign key referencing the order associated with the item."
             tests: 
               - not_null
               - relationships:
                   to: source('sql_server_dbo','orders')
                   field: order_id
           - name: product_id
+            description: "Foreign key referencing the product associated with the item."
             tests:
               - not_null
               - relationships:
                   to: source('sql_server_dbo','products')
                   field: product_id
           - name: quantity
+            description: "Quantity of the product in the order."
             tests:
               - not_null
               - positive_values
           - name: _fivetran_deleted
           - name: _fivetran_synced
+
       - name: products
+        description: "Table containing information about products."
         columns:
           - name: product_id
+            description: "Unique identifier for the product."
             tests:
               - unique 
               - not_null
           - name: price
+            description: "Price of the product."
             tests:
               - not_null
               - positive_values
           - name: name
+            description: "Name of the product."
             tests:
               - not_null
           - name: inventory
+            description: "Inventory count of the product."
             tests:
               - not_null
               - positive_values
           - name: _fivetran_deleted
           - name: _fivetran_synced
+
       - name: promos
+        description: "Table containing information about promos."
         columns:
           - name: promo_id
+            description: "Unique identifier for the promo."
             tests:
               - unique 
               - not_null
           - name: discount
+            description: "Discount value."
             tests:
               - not_null
               - positive_values
           - name: status
+            description: "Status of the promo."
             tests:
               - not_null
           - name: _fivetran_deleted
           - name: _fivetran_synced
+
       - name: users
+        description: "Table containing information about users."
         columns:
           - name: user_id
+            description: "Unique identifier for the user."
             tests:
               - unique 
               - not_null
           - name: updated_at
+            description: "Timestamp representing when the user was last updated."
             tests:
               - not_null
           - name: address_id
+            description: "Foreign key referencing the address associated with the user."
             tests:
               - not_null
           - name: last_name
+            description: "Last name of the user."
             tests:
               - not_null
           - name: created_at
+            description: "Timestamp representing when the user was created."
             tests:
               - not_null
           - name: phone_number
+            description: "Phone number of the user."
             tests:
               - not_null
           - name: total_orders
+            description: "Total number of orders placed by the user."
           - name: first_name
+            description: "First name of the user."
             tests:
               - not_null
           - name: email
+            description: "Email address of the user."
             tests:
               - not_null
           - name: _fivetran_deleted

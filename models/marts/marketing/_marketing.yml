@@ -1,0 +1,114 @@
+version: 2
+
+models:
+  - name: customers
+    description: "Model representing customer information."
+    columns:
+      - name: user_key
+        data_type: varchar
+        description: "Primary key for customers."
+        tests:
+          - unique
+          - not_null
+
+      - name: first_name
+        data_type: varchar
+        description: "First name of the customer."
+        tests:
+          - not_null
+
+      - name: last_name
+        data_type: varchar
+        description: "Last name of the customer."
+        tests:
+          - not_null
+
+      - name: email
+        data_type: varchar
+        description: "Email address of the customer."
+        tests:
+          - not_null
+
+      - name: phone_number
+        data_type: varchar
+        description: "Phone number of the customer."
+        tests:
+          - not_null
+
+      - name: created_date_utc
+        data_type: date
+        description: "Creation date of the customer record in UTC."
+        tests:
+          - not_null
+
+      - name: updated_date_utc
+        data_type: date
+        description: "Last update date of the customer record in UTC."
+        tests:
+          - not_null
+
+      - name: address
+        data_type: varchar
+        description: "Street address of the customer."
+        tests:
+          - not_null
+
+      - name: zipcode
+        data_type: number
+        description: "Zip code of the customer's address."
+        tests:
+          - not_null
+
+      - name: state
+        data_type: varchar
+        description: "State of the customer's address."
+        tests:
+          - not_null
+
+      - name: country
+        data_type: varchar
+        description: "Country of the customer's address."
+        tests:
+          - not_null
+
+      - name: total_no_orders
+        data_type: number
+        description: "Total number of orders placed by the customer."
+        tests:
+          - not_null
+          - positive_values
+
+      - name: total_order_cost_usd
+        data_type: number
+        description: "Total cost of all orders placed by the customer in USD."
+        tests:
+          - not_null
+          - positive_values
+
+      - name: total_shipping_cost_usd
+        data_type: number
+        description: "Total shipping cost of all orders placed by the customer in USD."
+        tests:
+          - not_null
+          - positive_values
+
+      - name: total_discount_usd
+        data_type: number
+        description: "Total discount applied to all orders placed by the customer in USD."
+        tests:
+          - not_null
+          - positive_values
+
+      - name: total_quantity_product
+        data_type: number
+        description: "Total quantity of products ordered by the customer."
+        tests:
+          - not_null
+          - positive_values
+
+      - name: total_diff_products
+        data_type: number
+        description: "Total number of different products ordered by the customer."
+        tests:
+          - not_null
+          - positive_values

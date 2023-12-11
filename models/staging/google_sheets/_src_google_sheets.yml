@@ -18,25 +18,31 @@ sources:
     tables:
 
       - name: budget
+        description: "Table containing budget information."
         loaded_at_field: _fivetran_synced
         columns:
           - name: _row
+            description: "Row identifier."
             tests:
               - not_null
               - unique
           - name: product_id
+            description: "Foreign key referencing the product associated with the budget entry."
             tests:
               - not_null
               - relationships:
                   to: source('sql_server_dbo','products')
                   field: product_id
           - name: quantity
+            description: "Quantity related to the budget entry."
             tests:
               - not_null
               - positive_values
           - name: month
+            description: "Month of the budget entry."
             tests:
               - not_null
           - name: _fivetran_synced
+            description: "Timestamp indicating when the data was synced from Google Sheets."
             tests:
               - not_null

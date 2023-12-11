@@ -1,6 +1,6 @@
 {{
   config(
-    materialized='table'
+    materialized='incremental'
   )
 }}
 
@@ -11,10 +11,16 @@ WITH dim_users AS (
         last_name,
         email,
         phone_number,
-        created_date_utc,
-        updated_date_utc,
-        address_key
+        created_date,
+        updated_date,
+        address_key,
+        date_loaded
     FROM {{ ref("dim_users") }}
+{% if is_incremental() %}
+
+	  where dim_users.date_loaded > (select max(this.date_loaded) from {{ this }} as this)
+
+{% endif %}
 ),
 
 dim_addresses AS (
@@ -23,18 +29,30 @@ dim_addresses AS (
         address,
         zipcode,
         state,
-        country
+        country,
+        date_loaded
     FROM {{ ref("dim_addresses") }}
+{% if is_incremental() %}
+
+	  where dim_addresses.date_loaded > (select max(this.date_loaded) from {{ this }} as this)
+
+{% endif %}
 ),
 
 dim_promos AS (
     SELECT
         promo_key,
-        discount_usd
+        discount_usd,
+        date_loaded
     FROM {{ ref("dim_promos") }}
+{% if is_incremental() %}
+
+	  where dim_promos.date_loaded > (select max(this.date_loaded) from {{ this }} as this)
+
+{% endif %}
 ),
 
-fact_order_items AS (
+fct_order_items AS (
     SELECT
         user_key,
         order_key,
@@ -43,7 +61,12 @@ fact_order_items AS (
         promo_key,
         quantity,
         product_key
-    FROM {{ ref("fact_order_items") }}
+    FROM {{ ref("fct_order_items") }}
+{% if is_incremental() %}
+
+	  where fct_order_items.date_loaded > (select max(this.date_loaded) from {{ this }} as this)
+
+{% endif %}
 )
 
 SELECT
@@ -52,8 +75,8 @@ SELECT
     last_name,
     email,
     phone_number,
-    created_date_utc,
-    updated_date_utc,
+    created_date,
+    updated_date,
     address,
     zipcode,
     state,
@@ -63,11 +86,12 @@ SELECT
     SUM(shipping_cost_item_usd) AS total_shipping_cost_usd,
     SUM(discount_usd) AS total_discount_usd,
     SUM(quantity) AS total_quantity_product,
-    COUNT(DISTINCT product_key) AS total_diff_products
+    COUNT(DISTINCT product_key) AS total_diff_products,
+    date_loaded
 FROM dim_users
 JOIN dim_addresses
 USING(address_key)
-JOIN fact_order_items
+JOIN fct_order_items
 USING(user_key)
 JOIN dim_promos
 USING(promo_key)
@@ -77,9 +101,10 @@ GROUP BY
     last_name,
     email,
     phone_number,
-    created_date_utc,
-    updated_date_utc,
+    created_date,
+    updated_date,
     address,
     zipcode,
     state,
-    country
+    country,
+    date_loaded

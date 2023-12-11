@@ -1,0 +1,69 @@
+version: 2
+
+models:
+  - name: int_session_lengths
+    description: "Intermediate model representing session lengths."
+    columns:
+      - name: session_key
+        data_type: varchar
+        description: "Primary key for sessions."
+        tests:
+          - unique
+          - not_null
+
+      - name: first_event_time_utc
+        data_type: timestamp_ntz
+        description: "UTC timestamp of the first event in the session."
+        tests:
+          - not_null
+
+      - name: last_event_time_utc
+        data_type: timestamp_ntz
+        description: "UTC timestamp of the last event in the session."
+        tests:
+          - not_null
+
+      - name: session_length_minutes
+        data_type: number
+        description: "Duration of the session in minutes."
+        tests:
+          - not_null
+          - positive_values
+  
+  - name: int_event_types_count
+    description: "Intermediate model representing counts of different event types in sessions."
+    columns:
+      - name: session_key
+        data_type: varchar
+        description: "Primary key for sessions."
+        tests:
+          - unique
+          - not_null
+
+      - name: page_view
+        data_type: number
+        description: "Number of page views in the session."
+        tests:
+          - not_null
+          - positive_values
+
+      - name: add_to_cart
+        data_type: number
+        description: "Number of 'add to cart' actions in the session."
+        tests:
+          - not_null
+          - positive_values
+
+      - name: checkout
+        data_type: number
+        description: "Number of checkout actions in the session."
+        tests:
+          - not_null
+          - positive_values
+
+      - name: package_shipped
+        data_type: number
+        description: "Number of packages shipped during the session."
+        tests:
+          - not_null
+          - positive_values
