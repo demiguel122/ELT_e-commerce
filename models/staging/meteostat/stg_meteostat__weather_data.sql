@@ -7,6 +7,11 @@
 WITH src_weather_data AS (
     SELECT *
     FROM {{ source('meteostat', 'weather_data') }}
+{% if is_incremental() %}
+
+	  where date_loaded > (select max(this.date_loaded) from {{ this }} as this)
+
+{% endif %}
 )
 
 SELECT
@@ -19,8 +24,3 @@ SELECT
     precipitation,
     date_loaded
 FROM src_weather_data
-{% if is_incremental() %}
-
-	  where src_weather_data.date_loaded > (select max(this.date_loaded) from {{ this }} as this)
-
-{% endif %}
