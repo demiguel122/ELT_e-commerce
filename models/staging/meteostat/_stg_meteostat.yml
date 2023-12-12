@@ -4,6 +4,11 @@ models:
   - name: stg_meteostat__weather_data
     description: "Staging model for Meteostat weather data."
     columns:
+      - name: row_id
+        description: "Unique identifier."
+        tests:
+          - not_null
+          - unique
       - name: zipcode
         data_type: varchar
         description: "The postal code representing a specific geographic area."
@@ -43,5 +48,9 @@ models:
       - name: precipitation
         data_type: number
         description: "The amount of precipitation (rain, snow, etc.) recorded in millimeters for the specified date and location."
+        tests:
+          - not_null
+      - name: date_loaded
+        description: "Timestamp specifying the date and time the specific row was retrieved and loaded."
         tests:
           - not_null

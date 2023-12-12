@@ -1,7 +1,7 @@
-{{
-  config(
-    materialized='incremental'
-  )
+{{ config(
+    materialized='incremental',
+    unique_key = 'event_key'
+    ) 
 }}
 
 WITH stg_events AS 

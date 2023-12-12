@@ -1,7 +1,7 @@
-{{
-  config(
-    materialized='incremental'
-  )
+{{ config(
+    materialized='incremental',
+    unique_key = 'product_key'
+    ) 
 }}
 
 WITH dim_products__snapshot AS (

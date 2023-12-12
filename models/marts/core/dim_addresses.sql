@@ -1,7 +1,7 @@
-{{
-  config(
-    materialized='incremental'
-  )
+{{ config(
+    materialized='incremental',
+    unique_key = 'address_key'
+    ) 
 }}
 
 WITH distinct_stg_addresses AS 

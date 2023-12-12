@@ -1,7 +1,7 @@
-{{
-  config(
-    materialized='incremental'
-  )
+{{ config(
+    materialized='incremental',
+    unique_key = 'promo_key'
+    ) 
 }}
 
 WITH dim_promos__snapshot AS 

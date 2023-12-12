@@ -18,6 +18,11 @@ sources:
       - name: weather_data
         description: "Table containing historical weather data by zipcode."
         columns:
+          - name: row_id
+            description: "Unique identifier."
+            tests:
+              - not_null
+              - unique
           - name: zipcode
             description: "The postal code representing a specific geographic area."
             tests:
@@ -40,5 +45,9 @@ sources:
               - not_null
           - name: precipitation
             description: "The amount of precipitation (rain, snow, etc.) recorded in millimeters for the specified date and location."
+            tests:
+              - not_null
+          - name: date_loaded
+            description: "Timestamp specifying the date and time the specific row was retrieved and loaded."
             tests:
               - not_null

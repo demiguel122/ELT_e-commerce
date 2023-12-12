@@ -1,7 +1,7 @@
-{{
-  config(
-    materialized='view'
-  )
+{{ config(
+    materialized='incremental',
+    unique_key = 'user_key'
+    ) 
 }}
 
 WITH src_users AS (
@@ -18,6 +18,11 @@ WITH src_users AS (
         to_time(updated_at) AS updated_time_utc,
         _fivetran_synced AS date_loaded
     FROM {{ source('sql_server_dbo', 'users') }}
+{% if is_incremental() %}
+
+	  where _fivetran_synced > (select max(date_loaded) from {{ this }})
+
+{% endif %}
     ),
 
 stg_users AS (

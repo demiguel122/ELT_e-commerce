@@ -13,12 +13,14 @@ WITH stg_order_items AS
 (
     SELECT *
     FROM {{ ref("stg_sql_server_dbo__order_items") }}
+    WHERE date_loaded = (select max(date_loaded) from {{ ref('stg_sql_server_dbo__order_items') }})
 ),
 
 stg_orders AS 
 (
     SELECT *
     FROM {{ ref("stg_sql_server_dbo__orders") }}
+    WHERE date_loaded = (select max(date_loaded) from {{ ref('stg_sql_server_dbo__orders') }})
 ),
 
 stg_products AS 
@@ -27,6 +29,7 @@ stg_products AS
         product_key,
         price_usd
     FROM {{ ref("stg_sql_server_dbo__products") }}
+    WHERE date_loaded = (select max(date_loaded) from {{ ref('stg_sql_server_dbo__products') }})
 ),
 
 order_items_allocations AS (

@@ -1,7 +1,7 @@
-{{
-  config(
-    materialized='incremental'
-  )
+{{ config(
+    materialized='incremental',
+    unique_key = 'user_key'
+    ) 
 }}
 
 WITH dim_users__snapshot AS 

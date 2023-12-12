@@ -1,7 +1,7 @@
-{{
-  config(
-    materialized='incremental'
-  )
+{{ config(
+    materialized='incremental',
+    unique_key = 'shipping_service_key'
+    ) 
 }}
 
 WITH distinct_services AS (

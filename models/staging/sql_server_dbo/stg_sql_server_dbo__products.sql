@@ -1,12 +1,17 @@
-{{
-  config(
-    materialized='view'
-  )
+{{ config(
+    materialized='incremental',
+    unique_key = 'product_key'
+    ) 
 }}
 
 WITH src_products AS (
     SELECT * 
     FROM {{ source('sql_server_dbo', 'products') }}
+{% if is_incremental() %}
+
+	  where _fivetran_synced > (select max(date_loaded) from {{ this }})
+
+{% endif %}
     ),
 
 stg_products AS (
