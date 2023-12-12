@@ -47,3 +47,7 @@ sources:
             description: "The amount of precipitation (rain, snow, etc.) recorded in millimeters for the specified date and location."
             tests:
               - not_null
+          - name: date_loaded
+            description: "Timestamp specifying the date and time the specific row was retrieved and loaded."
+            tests:
+              - not_null
