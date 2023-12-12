@@ -1,15 +1,21 @@
-{{
-  config(
-    materialized='view'
-  )
+{{ config(
+    materialized='incremental',
+    unique_key = 'row_id'
+    ) 
 }}
 
 WITH src_weather_data AS (
     SELECT *
     FROM {{ source('meteostat', 'weather_data') }}
+{% if is_incremental() %}
+
+	  where date_loaded > (select max(date_loaded) from {{ this }})
+
+{% endif %}
 )
 
 SELECT
+    row_id,
     zipcode,
     {{ dbt_utils.generate_surrogate_key(['date']) }} AS date_key,
     avg_temperature_celsius,
