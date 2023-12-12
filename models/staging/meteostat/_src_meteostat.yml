@@ -18,6 +18,11 @@ sources:
       - name: weather_data
         description: "Table containing historical weather data by zipcode."
         columns:
+          - name: row_id
+            description: "Unique identifier."
+            tests:
+              - not_null
+              - unique
           - name: zipcode
             description: "The postal code representing a specific geographic area."
             tests:

@@ -4,6 +4,11 @@ models:
   - name: stg_meteostat__weather_data
     description: "Staging model for Meteostat weather data."
     columns:
+      - name: row_id
+        description: "Unique identifier."
+        tests:
+          - not_null
+          - unique
       - name: zipcode
         data_type: varchar
         description: "The postal code representing a specific geographic area."
