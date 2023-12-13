@@ -13,21 +13,18 @@ WITH distinct_stg_order_items AS
 (
     SELECT DISTINCT product_key
     FROM {{ ref('stg_sql_server_dbo__order_items') }}
-    WHERE date_loaded = (select max(date_loaded) from {{ ref('stg_sql_server_dbo__order_items') }})
 ),
 
 distinct_stg_events AS 
 (
     SELECT DISTINCT product_key
     FROM {{ ref('stg_sql_server_dbo__events') }}
-    WHERE date_loaded = (select max(date_loaded) from {{ ref('stg_sql_server_dbo__events') }})
 ),
 
 distinct_stg_budget AS 
 (
     SELECT DISTINCT product_key
     FROM {{ ref('stg_google_sheets__budget') }}
-    WHERE date_loaded = (select max(date_loaded) from {{ ref('stg_google_sheets__budget') }})
 ),
 
 union_all_with_duplicates AS 
@@ -58,6 +55,5 @@ FROM without_duplicates
 FULL JOIN
 {{ ref('stg_sql_server_dbo__products') }} AS stg_products
 USING (product_key)
-WHERE date_loaded = (select max(date_loaded) from {{ ref('stg_sql_server_dbo__products') }})
 
 {% endsnapshot %}
