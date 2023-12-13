@@ -13,21 +13,18 @@ WITH distinct_stg_orders AS
 (
     SELECT DISTINCT user_key 
     FROM {{ ref('stg_sql_server_dbo__orders') }}
-    WHERE date_loaded = (select max(date_loaded) from {{ ref('stg_sql_server_dbo__orders') }})
 ),
 
 distinct_stg_events AS 
 (
     SELECT DISTINCT user_key
     FROM {{ ref('stg_sql_server_dbo__events') }}
-    WHERE date_loaded = (select max(date_loaded) from {{ ref('stg_sql_server_dbo__events') }})
 ),
 
 distinct_stg_users AS 
 (
     SELECT DISTINCT user_key
     FROM {{ ref('stg_sql_server_dbo__users') }}
-    WHERE date_loaded = (select max(date_loaded) from {{ ref('stg_sql_server_dbo__users') }})
 ),
 
 union_all_with_duplicates AS 
@@ -53,6 +50,5 @@ FROM without_duplicates
 FULL JOIN
 {{ ref('stg_sql_server_dbo__users') }} AS users
 USING (user_key)
-WHERE date_loaded = (select max(date_loaded) from {{ ref('stg_sql_server_dbo__users') }})
 
 {% endsnapshot %}

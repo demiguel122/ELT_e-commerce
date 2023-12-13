@@ -13,7 +13,6 @@ WITH stg_promos AS
 (
     SELECT *
     FROM {{ ref('stg_sql_server_dbo__promos') }}
-    WHERE date_loaded = (select max(date_loaded) from {{ ref('stg_sql_server_dbo__promos') }})
 )
 
 SELECT *
