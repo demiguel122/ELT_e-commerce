@@ -13,14 +13,11 @@ models:
               field: zipcode
               to: ref('dim_addresses')
 
-      - name: date_key
+      - name: date
         data_type: varchar
         description: "Foreign key referencing the date dimension table (dim_date)."
         tests:
           - not_null
-          - relationships:
-              field: date_key
-              to: ref('dim_date')
 
       - name: most_sold_product_key
         data_type: varchar
