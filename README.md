@@ -8,6 +8,8 @@
   * [Silver Layer]()
   * [Gold Layer]()
 * [Other Project Aspects]()
+  * [Testing]()
+  * [Incrementality and Slowly Changing Dimensions (SCDs)]()
 -------------------
 
 ## Brief Introduction
