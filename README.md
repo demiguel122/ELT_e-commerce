@@ -1,4 +1,4 @@
-# ELT project for an e-commerce platform using Fivetran, Snowflake and dbt
+# Lakehouse for an e-commerce platform using Fivetran, Snowflake and dbt
 
 ## Table of contents
 
