@@ -26,7 +26,7 @@ Data corresponding to Microsoft SQL Server and Google Sheets will be extracted a
 
 All tables except from _weather_data_ represent business-related entities. _weather_data_ contains historical weather data per zipcode and date. It is intended to serve advanced analytics purposes, such as adjusting a linear regression model to analyze the influence of weather upon sales.
 
-As visible in the diagram below, I followed an ELT (Extract, transform, Load) approach, whereby data is first extracted and directly loaded onto the Data Warehouse prior to its transformation with dbt. 
+As visible in the diagram below, I followed an ELT (Extract, Transform, Load) approach, whereby data is first extracted and directly loaded onto the Data Warehouse prior to its transformation with dbt. 
 
 Additionally, and as part of a medallion architecture, data will be logically organized in three different stages: 
 - **Bronze Layer**: it contains raw data. The table structures in this layer correspond to the source system table structures "as-is".
