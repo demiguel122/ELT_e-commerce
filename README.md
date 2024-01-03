@@ -39,16 +39,20 @@ The goal of such design pattern is to incrementally and progressively improve th
   <img src="https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/assets/144360549/64eeb717-2349-44e6-91de-8ad2d68dbbc4.png">
 </p>
 
-
-
 ## Medallion Lakehouse Architecture
-
-
 
 ### Bronze Layer
 
+Below we can find the Entity-Relationship Diagram (ERD) corresponding to the Bronze Layer. As we saw earlier, this is the data model as-is.
 
+As such, all these tables were configured as source models in the dbt project.
 
 <p align="center">
   <img src="https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/assets/144360549/1a3f9621-4613-4171-9883-0168dea25dd0.png">
 </p>
+
+## Silver Layer
+
+As per [dbt's official documentation](https://docs.getdbt.com/best-practices/how-we-structure/2-staging), staging models should have a 1-to-1 relationship to our source tables. That means for each source system table we’ll have a single staging model referencing it, acting as its entry point —staging it— for use downstream.
+
+These models incorporate minor or light transformations (i.e. renaming, casting, basic computations, categorizations, etc). Hence, the ERD did not change at this stage of our project.
