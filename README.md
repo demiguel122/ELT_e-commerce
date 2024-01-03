@@ -56,3 +56,12 @@ As such, all these tables were configured as source models in the dbt project.
 As per [dbt's official documentation](https://docs.getdbt.com/best-practices/how-we-structure/2-staging), staging models should have a 1-to-1 relationship to our source tables. That means for each source system table we’ll have a single staging model referencing it, acting as its entry point —staging it— for use downstream.
 
 These models incorporate minor or light transformations (i.e. renaming, casting, basic computations, categorizations, etc). Hence, the ERD did not change at this stage of our project.
+
+All the staging models were configured as incremental models in dbt (by setting up the materialized='incremental' parameter). This reduces computation overhead every time the models are run by processing only the new/updated rows in each table.
+
+All the staging models of the project can be found [here](https://github.com/demiguel122/lakehouse_ELT_e-commerce/tree/main/models/staging).
+
+## Gold Layer
+
+
+All the models of the project corresponding to the Gold Layer can be found can be found [here](https://github.com/demiguel122/lakehouse_ELT_e-commerce/tree/main/models/marts).
