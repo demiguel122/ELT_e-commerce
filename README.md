@@ -81,7 +81,7 @@ The **_core_** folder contains all models that are of common use to all differen
 ```
 (price_usd / order_total_usd) * shipping_cost_usd AS shipping_cost_item_usd
 ```
-- 
+- **Added dimension tables**:
 
 The resulting dimensional model can be found below, with green tables being dimension tables and orange tables being fact tables:
 
