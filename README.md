@@ -51,17 +51,44 @@ As such, all these tables were configured as source models in the dbt project.
   <img src="https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/assets/144360549/1a3f9621-4613-4171-9883-0168dea25dd0.png">
 </p>
 
-## Silver Layer
+### Silver Layer
 
 As per [dbt's official documentation](https://docs.getdbt.com/best-practices/how-we-structure/2-staging), staging models should have a 1-to-1 relationship to our source tables. That means for each source system table we’ll have a single staging model referencing it, acting as its entry point —staging it— for use downstream.
 
-These models incorporate minor or light transformations (i.e. renaming, casting, basic computations, categorizations, etc). Hence, the ERD did not change at this stage of our project.
+These models incorporate minor or light transformations (i.e. renaming, casting, basic computations, categorizations, hashing surrogate keys, etc). Hence, the ERD did not change at this stage of our project.
 
-All the staging models were configured as incremental models in dbt (by setting up the materialized='incremental' parameter). This reduces computation overhead every time the models are run by processing only the new/updated rows in each table.
+All the staging models were configured as incremental models in dbt (by setting the 'materialized' config parameter to 'incremental'):
+```
+{{
+    config(
+        materialized='incremental'
+    )
+}}
+```
+This reduces computation overhead every time the models are run by processing only the new/updated rows in each table.
 
 All the staging models of the project can be found [here](https://github.com/demiguel122/lakehouse_ELT_e-commerce/tree/main/models/staging).
 
-## Gold Layer
+### Gold Layer
 
+This is the layer where everything comes together and we start to arrange all of our staging models into full-fledged cells that have identity and purpose. In dbt, this layer is commonly refered to as the marts layer. 
 
-All the models of the project corresponding to the Gold Layer can be found can be found [here](https://github.com/demiguel122/lakehouse_ELT_e-commerce/tree/main/models/marts).
+Grouping models by departments (marketing, finance, etc) is the most common structure at this stage. In this project, marts are grouped into four different folders: _core_, _marketing_, _product_ and _advanced_analytics_.
+
+The **_core_** folder contains all models that are of common use to all different departments and busines units of the organization. All the models in this folder conform our Kimball-like dimensional model. Following Kimball's guidelines, the following changes were made to the original E-R model:
+
+- **Removed the _orders_ table, kept _order_items_ only**: The initial model had two tables that represented sales transactions: _orders_, which contained data at the header level, and _order_items_, with data at line level. We lowered the grain to the line level. 'order_cost_item_usd' was taken directly from the 'price_usd' field in the _products_ table, so there was no need for any additional computation. In order to get the unitary shipping cost, 'shipping_cost_item_usd', we had to re-calculate through a process called _allocation_, whereby the shipping cost is proportionally allocated to each order item in accordance with their relative weight in the overall order cost:
+```
+(price_usd / order_total_usd) * shipping_cost_usd AS shipping_cost_item_usd
+```
+- 
+
+The resulting dimensional model can be found below, with green tables being dimension tables and blue tables being fact tables:
+
+SCREENSHOT
+
+The folders _marketing_, _product_ and _advanced_analytics_ contain different joined, project-specific models for each department.
+
+INTERMEDIATE MODELS
+
+All the models of the project corresponding to the Gold Layer can be found [here](https://github.com/demiguel122/lakehouse_ELT_e-commerce/tree/main/models/marts).
