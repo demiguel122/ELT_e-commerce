@@ -75,7 +75,7 @@ This is the layer where everything comes together and we start to arrange all of
 
 Grouping models by departments (marketing, finance, etc) is the most common structure at this stage. In this project, marts are grouped into four different folders: _core_, _marketing_, _product_ and _advanced_analytics_.
 
-The **_core_** folder contains all models that are of common use to all different departments and busines units of the organization. All the models in this folder conform our Kimball-like dimensional model. Following Kimball's guidelines, the following changes were made to the original E-R model:
+The **_core_** folder contains all models that are of common use to all different departments and busines units of the organization, and they will be later used to create department-specific models. All the models in this folder conform our Kimball-like dimensional model. Following Kimball's guidelines, the following changes were made to the original E-R model:
 
 - **Removed the _orders_ table, kept _order_items_ only**: The initial model had two tables that represented sales transactions: _orders_, which contained data at the header level, and _order_items_, with data at line level. We lowered the grain to the line level. 'order_cost_item_usd' was taken directly from the 'price_usd' field in the _products_ table, so there was no need for any additional computation. In order to get the unitary shipping cost, 'shipping_cost_item_usd', we had to re-calculate through a process called _allocation_, whereby the shipping cost is proportionally allocated to each order item in accordance with their relative weight in the overall order cost:
 ```
