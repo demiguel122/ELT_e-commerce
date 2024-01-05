@@ -83,9 +83,11 @@ The **_core_** folder contains all models that are of common use to all differen
 ```
 - 
 
-The resulting dimensional model can be found below, with green tables being dimension tables and blue tables being fact tables:
+The resulting dimensional model can be found below, with green tables being dimension tables and orange tables being fact tables:
 
-SCREENSHOT
+<p align="center">
+  <img src="https://github.com/demiguel122/lakehouse_ELT_e-commerce/assets/144360549/5f18bf14-a05e-476b-9832-4e4dd047878c.png">
+</p>
 
 The folders _marketing_, _product_ and _advanced_analytics_ contain different joined, project-specific models for each department.
 
