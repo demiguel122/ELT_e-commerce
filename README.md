@@ -8,8 +8,8 @@
   * [Silver Layer](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#silver-layer)
   * [Gold Layer](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#gold-layer)
 * [Other Project Aspects]()
-  * [Testing]()
   * [Incrementality and Slowly Changing Dimensions (SCDs)]()
+  * [Testing]()
 -------------------
 
 ## High-level Project Introduction
@@ -57,23 +57,13 @@ As per [dbt's official documentation](https://docs.getdbt.com/best-practices/how
 
 These models incorporate minor or light transformations (i.e. renaming, casting, basic computations, categorizations, hashing surrogate keys, etc). Hence, the ERD did not change at this stage of our project.
 
-All the staging models were configured as incremental models in dbt (by setting the 'materialized' config parameter to 'incremental'):
-```
-{{
-    config(
-        materialized='incremental'
-    )
-}}
-```
-This reduces computation overhead every time the models are run by processing only the new/updated rows in each table.
-
 All the staging models of the project can be found [here](https://github.com/demiguel122/lakehouse_ELT_e-commerce/tree/main/models/staging).
 
 ### Gold Layer
 
 This is the layer where everything comes together and we start to arrange all of our staging models into full-fledged cells that have identity and purpose. In dbt, this layer is commonly refered to as the marts layer. 
 
-Grouping models by departments (marketing, finance, etc) is the most common structure at this stage. In this project, marts are grouped into four different folders: _core_, _marketing_, _product_ and _advanced_analytics_.
+Grouping models by departments (marketing, finance, etc) is the most common structure at this stage. In this project, marts are grouped into four different folders: _core_, _marketing_, _product_ and _advanced_analytics_, each of which containing different joined, project-specific models for each department.
 
 The **_core_** folder contains all models that are of common use to all different departments and busines units of the organization, and they will be later used to create department-specific models. All the models in this folder conform our Kimball-like dimensional model. Following Kimball's guidelines, the following changes were made to the original E-R model:
 
@@ -81,16 +71,43 @@ The **_core_** folder contains all models that are of common use to all differen
 ```
 (price_usd / order_total_usd) * shipping_cost_usd AS shipping_cost_item_usd
 ```
-- **Added dimension tables**:
+- **Added dimension tables**: some dimensions were taken out of the fact tables and included in their own dimension table (i.e. _dim_shipping_, _dim_status_ and _dim_event_type_). _dim_date_ and _dim_time_ were also generated.
 
-The resulting dimensional model can be found below, with green tables being dimension tables and orange tables being fact tables:
+The resulting dimensional model can be found below, with green tables being dimension tables and orange tables being fact tables (note that _dim_date_ and _dim_time_ were not included for the sake of simplicity):
 
 <p align="center">
   <img src="https://github.com/demiguel122/lakehouse_ELT_e-commerce/assets/144360549/5f18bf14-a05e-476b-9832-4e4dd047878c.png">
 </p>
 
-The folders _marketing_, _product_ and _advanced_analytics_ contain different joined, project-specific models for each department.
-
-INTERMEDIATE MODELS
-
 All the models of the project corresponding to the Gold Layer can be found [here](https://github.com/demiguel122/lakehouse_ELT_e-commerce/tree/main/models/marts).
+
+## Other Project Aspects
+
+### Incrementality and Slowly Changing Dimensions (SCDs)
+
+All the staging and numerous downstream models were configured as [incremental](https://docs.getdbt.com/docs/build/incremental-models) in dbt (by setting the _'materialized'_ config parameter to _'incremental'_):
+
+```
+{{
+    config(
+        materialized='incremental',
+        unique_key=<unique key>
+    )
+}}
+```
+
+This reduces computation overhead (and its associated cost) every time the models are run by processing only the new/updated (i.e. the "delta") rows in each table.
+
+The _'unique_key'_ parameter enables _updating_ existing rows instead of just appending new rows. If new information arrives for an existing unique key, that new information can replace the current information instead of being appended to the table. If a duplicate row arrives, it can be ignored. Note that this parameter is a form of implementing **Type-1 Slowly Changing Dimensions** in dbt, and was therefore convenient for those models in which we are only interested in keeping the latest version without any historical data, such as _fct_events_, _fct_budget_, _dim_status_, _dim_addresses_, and other.
+
+On the other hand, dbt's [snapshots](https://docs.getdbt.com/docs/build/snapshots) were also used for models for which we needed historical data to "look back in time" at previous data states in their mutable tables. Snapshots implement **Type-2 Slowly Changing Dimensions**.
+
+In these cases, I decided to use snapshots as upstream models for downstream incremental models. This way, the working model will only contain the latest version of data, but a historical version will always be available if needed. This is known as **Type-4 Slowly Changing Dimensions**. The diagram below shows an example:
+
+<p align="center">
+  <img src="https://github.com/demiguel122/lakehouse_ELT_e-commerce/assets/144360549/a83479ee-4d45-4126-be19-a606a72e4670.png">
+</p>
+
+### Testing
+
+
