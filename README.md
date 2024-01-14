@@ -1,9 +1,9 @@
-# Lakehouse for an e-commerce platform using Fivetran, Snowflake and dbt
+# Lakehouse Medallion Architecture for an e-commerce platform using Fivetran, Snowflake and dbt
 
 ## Table of contents
 
 * [High-level Project Introduction](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#high-level-project-introduction)
-* [Medallion Lakehouse Architecture](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#medallion-lakehouse-architecture)
+* [Lakehouse Medallion Architecture](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#lakehouse-medallion-architecture)
   * [Bronze Layer](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#bronze-layer)
   * [Silver Layer](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#silver-layer)
   * [Gold Layer](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#gold-layer)
@@ -102,7 +102,7 @@ The _'unique_key'_ parameter enables _updating_ existing rows instead of just ap
 
 On the other hand, dbt's [snapshots](https://docs.getdbt.com/docs/build/snapshots) were also used for models for which we needed historical data to "look back in time" at previous data states in their mutable tables. Snapshots implement **Type-2 Slowly Changing Dimensions**.
 
-In these cases, I decided to use snapshots as upstream models for downstream incremental models. This way, the working model will only contain the latest version of data, but a historical version will always be available if needed. This is known as **Type-4 Slowly Changing Dimensions**. The diagram below shows an example:
+In such cases, I decided to use snapshots as upstream models for downstream incremental models. This way, the working model will only contain the latest version of data, but a historical version will always be available if needed. This is known as **Type-4 Slowly Changing Dimensions**. The diagram below shows an example:
 
 <p align="center">
   <img src="https://github.com/demiguel122/lakehouse_ELT_e-commerce/assets/144360549/a83479ee-4d45-4126-be19-a606a72e4670.png">
@@ -110,4 +110,30 @@ In these cases, I decided to use snapshots as upstream models for downstream inc
 
 ### Testing
 
+All models in each layer are consistently tested. These tests can be found in each .yml file. 
 
+There are 2 different types of tests in dbt:
+
+- **Singular tests**: these tests are defined in .sql files, typically in the tests directory. They are defined by writing the exact SQL that will return failing records. We call these "singular" data tests, because they're one-off assertions usable for a single purpose.
+
+- **Generic tests**: these tests can be reused over and over again. When a test is generic, it can be defined on as many columns as you like, across as many models as you like.
+
+The most common generic tests are _not_null_, _unique_ and _relationships_. These tests are already defined by dbt. In this project, I defined a _positive_values_ test.
+
+Singular, specific tests were also defined. Here's an example:
+
+```
+SELECT
+    order_cost_usd,
+    shipping_cost_usd,
+    order_total_usd,
+    discount_usd
+FROM {{ ref('stg_sql_server_dbo__orders') }}
+JOIN {{ ref('stg_sql_server_dbo__promos') }}
+USING(promo_key)
+WHERE (order_cost_usd + shipping_cost_usd) - discount_usd != order_total_usd
+```
+
+This _stg_orders__order_total_ test checks whether the total order amount equals the order cost plus the shipping costs, once a potential discount is applied.
+
+More singular tests can be found in the [tests directory](https://github.com/demiguel122/lakehouse_ELT_e-commerce/tree/main/tests).
