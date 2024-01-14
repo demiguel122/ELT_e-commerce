@@ -2,14 +2,14 @@
 
 ## Table of contents
 
-* [High-level Project Introduction](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#high-level-project-introduction)
+* [High-level Project Introduction](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#high-level-project-introduction)
 * [Lakehouse Medallion Architecture](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#lakehouse-medallion-architecture)
   * [Bronze Layer](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#bronze-layer)
   * [Silver Layer](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#silver-layer)
   * [Gold Layer](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#gold-layer)
-* [Other Project Aspects]()
-  * [Incrementality and Slowly Changing Dimensions (SCDs)]()
-  * [Testing]()
+* [Other Project Aspects](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#other-project-aspects)
+  * [Incrementality and Slowly Changing Dimensions (SCDs)](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#incrementality-and-slowly-changing-dimensions-scds)
+  * [Testing](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#testing)
 -------------------
 
 ## High-level Project Introduction
@@ -39,7 +39,7 @@ The goal of such design pattern is to incrementally and progressively improve th
   <img src="https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/assets/144360549/64eeb717-2349-44e6-91de-8ad2d68dbbc4.png">
 </p>
 
-## Medallion Lakehouse Architecture
+## Lakehouse Medallion Architecture
 
 ### Bronze Layer
 
