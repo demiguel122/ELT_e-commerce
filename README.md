@@ -3,10 +3,10 @@
 ## Table of contents
 
 * [High-level Project Introduction](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#high-level-project-introduction)
-* [Lakehouse Medallion Architecture](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#lakehouse-medallion-architecture)
-  * [Bronze Layer](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#bronze-layer)
-  * [Silver Layer](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#silver-layer)
-  * [Gold Layer](https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/edit/main/README.md#gold-layer)
+* [Lakehouse Medallion Architecture](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#lakehouse-medallion-architecture)
+  * [Bronze Layer](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#bronze-layer)
+  * [Silver Layer](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#silver-layer)
+  * [Gold Layer](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#gold-layer)
 * [Other Project Aspects](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#other-project-aspects)
   * [Incrementality and Slowly Changing Dimensions (SCDs)](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#incrementality-and-slowly-changing-dimensions-scds)
   * [Testing](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#testing)
