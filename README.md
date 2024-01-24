@@ -10,6 +10,7 @@
 * [Other Project Aspects](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#other-project-aspects)
   * [Incrementality and Slowly Changing Dimensions (SCDs)](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#incrementality-and-slowly-changing-dimensions-scds)
   * [Testing](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#testing)
+* [Contact](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#contact)
 -------------------
 
 ## High-level Project Introduction
@@ -137,3 +138,8 @@ WHERE (order_cost_usd + shipping_cost_usd) - discount_usd != order_total_usd
 This _stg_orders__order_total_ test checks whether the total order amount equals the order cost plus the shipping costs, once a potential discount is applied.
 
 More singular tests can be found in the [tests directory](https://github.com/demiguel122/lakehouse_ELT_e-commerce/tree/main/tests).
+
+## Contact
+
+- **Linkedin**: [https://www.linkedin.com/in/albertodemiguel/](https://www.linkedin.com/in/albertodemiguel/)
+- **Email**: [ademiguellechuga@gmail.com](ademiguellechuga@gmail.com)
