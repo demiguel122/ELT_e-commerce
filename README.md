@@ -1,4 +1,4 @@
-# Lakehouse Medallion Architecture for an e-commerce platform using Fivetran, Snowflake and dbt
+# Medallion Architecture for an e-commerce platform using Fivetran, Snowflake and dbt
 
 ## Table of contents
 
@@ -15,7 +15,7 @@
 
 ## High-level Project Introduction
 
-This project implements a lakehouse medallion architecture using modern Data Stack tools such as Fivetran, Snowflake and dbt. The ficticious organization is an e-commerce company.
+This project implements a Medallion Architecture (ELT) using Modern Data Stack tools such as Fivetran, Snowflake and dbt. The ficticious organization is an e-commerce company.
 
 Data is retrieved from the following sources:
 
