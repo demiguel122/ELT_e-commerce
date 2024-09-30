@@ -1,4 +1,4 @@
-# Medallion Architecture for an e-commerce platform using Fivetran, Snowflake and dbt
+# ELT Medallion Architecture for an e-commerce platform using Fivetran, Snowflake and dbt
 
 ## Table of contents
 
