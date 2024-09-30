@@ -3,7 +3,7 @@
 ## Table of contents
 
 * [High-level Project Introduction](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#high-level-project-introduction)
-* [Lakehouse Medallion Architecture](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#lakehouse-medallion-architecture)
+* [Medallion Architecture](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#lakehouse-medallion-architecture)
   * [Bronze Layer](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#bronze-layer)
   * [Silver Layer](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#silver-layer)
   * [Gold Layer](https://github.com/demiguel122/lakehouse_ELT_e-commerce?tab=readme-ov-file#gold-layer)
@@ -32,7 +32,7 @@ As visible in the diagram below, I followed an ELT (Extract, Transform, Load) ap
 Additionally, and as part of a medallion architecture, data will be logically organized in three different stages: 
 - **Bronze Layer**: it contains raw data. The table structures in this layer correspond to the source system table structures "as-is".
 - **Silver Layer**: this is where the data from the Bronze layer is matched, merged, conformed and cleansed ("just enough") so that the Silver layer can provide an "Enterprise view" of all its key business entities, concepts and transactions. From a data modeling perspective, the Silver Layer has more 3rd-Normal Form like data models.
-- **Golden Layer**: Data in the Gold layer of the lakehouse is typically organized in consumption-ready "project-specific" databases. The Gold layer is for reporting and uses more de-normalized and read-optimized data models (i.e. Inmon, Kimball).
+- **Golden Layer**: Data in the Gold layer is typically organized in consumption-ready "project-specific" databases. The Gold layer is for reporting and uses more de-normalized and read-optimized data models (i.e. Inmon, Kimball).
 
 The goal of such design pattern is to incrementally and progressively improve the structure and quality of data as it flows through each layer of the architecture.
 
@@ -40,7 +40,7 @@ The goal of such design pattern is to incrementally and progressively improve th
   <img src="https://github.com/demiguel122/ELT_Snowflake_dbt_e-commerce/assets/144360549/64eeb717-2349-44e6-91de-8ad2d68dbbc4.png">
 </p>
 
-## Lakehouse Medallion Architecture
+## Medallion Architecture
 
 ### Bronze Layer
 
